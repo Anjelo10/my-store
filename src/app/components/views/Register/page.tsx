@@ -1,19 +1,51 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FaEye } from "react-icons/fa6";
+import { FaEyeSlash } from "react-icons/fa6";
+
+// Variabel Scema yang di devinisikan dengan ZOD
+const schema = z.object({
+  email: z.string().email({ message: "Email Tidak Sah" }),
+  fullname: z.string().min(1, { message: "Minimal harus 1 karakter" }),
+  password: z
+    .string()
+    .min(6, { message: "Minimal harus 6 karakter" })
+    .regex(/[A-Z]/, {
+      message: "Harus mengandung minimal 1 huruf besar",
+    })
+    .regex(/[0-9]/, {
+      message: "Harus mengandung minimal 1 angka",
+    })
+    .regex(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/, {
+      message: "Harus mengandung minimal 1 karakter khusus",
+    }),
+  phone: z.string().min(10, { message: "Minimal harus 10 karakter" }),
+});
+
+type FormData = z.infer<typeof schema>;
 
 const RegisterView = () => {
   const { push } = useRouter();
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const data = {
-      email: form.email.value,
-      fullname: form.fullname.value,
-      password: form.password.value,
-      phone: form.phone.value,
-    };
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
+
+  const onSubmit = async (data: FormData) => {
+    setIsLoading(true);
+    setError("");
 
     const result = await fetch("/api/user/register", {
       method: "POST",
@@ -22,58 +54,96 @@ const RegisterView = () => {
       },
       body: JSON.stringify(data),
     });
+
     if (result.status === 200) {
-      form.reset();
-      push("/auth/login");
+      push("/login");
     } else {
-      console.log("error");
+      setError("Email sudah terdaftar");
     }
+
+    setIsLoading(false);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
     <div className="flex items-center justify-center h-screen w-full flex-col">
-      <h1 className="text-5xl font-bold">Register</h1>
-      <div className=" flex w-[30%] shadow-lg rounded-sm flex-col p-5 ">
-        <form className="flex flex-col" onSubmit={handleSubmit}>
-          <label htmlFor="email">Email</label>
-          <input
-            name="email"
-            id="email"
-            type="text"
-            className="w-[100%] bg-gray-100 rounded-sm shadow-sm hover:bg-gray-300 mb-3"
-          />
+      <h1 className="text-5xl font-bold p-3">Register</h1>
+      {error && <p className="text-red-500">{error}</p>}
+      <div className=" flex w-[30%] shadow-lg rounded-sm flex-col p-5 m-3 ">
+        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+          {/* Fullname */}
           <label htmlFor="fullname">Full Name</label>
           <input
-            name="fullname"
+            {...register("fullname")}
             id="fullname"
             type="text"
-            className="w-[100%] bg-gray-100 rounded-sm shadow-sm hover:bg-gray-300 mb-2"
+            className="w-[100%] bg-gray-100 rounded-[2px] shadow-sm hover:bg-gray-300 mb-2 h-8"
           />
-          <label htmlFor="password">Password</label>
+          {errors.fullname && (
+            <p className="text-red-500">{errors.fullname.message}</p>
+          )}
+          {/* Email */}
+          <label htmlFor="email">Email</label>
           <input
-            name="password"
-            id="password"
-            type="password"
-            className="w-[100%] bg-gray-100 rounded-sm shadow-sm hover:bg-gray-300 mb-2"
+            {...register("email")}
+            id="email"
+            type="text"
+            className="w-[100%] bg-gray-100 rounded-[2px] shadow-sm hover:bg-gray-300 mb-3 h-8"
           />
+          {errors.email && (
+            <p className="text-red-500">{errors.email.message}</p>
+          )}
+          {/* Password */}
+          <div className="relative">
+            <label htmlFor="password">Password</label>
+            <input
+              {...register("password")}
+              id="password"
+              type={showPassword ? "text" : "password"}
+              className="w-[100%] bg-gray-100 rounded-[2px] shadow-sm hover:bg-gray-300 mb-2 h-8"
+            />
+            {errors.password && (
+              <p className="text-red-500">{errors.password.message}</p>
+            )}
+
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute right-3 top-10 transform -translate-y-1/2"
+            >
+              {showPassword ? (
+                <FaEyeSlash className="text-gray-500 text-[20px] " />
+              ) : (
+                <FaEye className="text-gray-500 text-[18px]" />
+              )}
+            </button>
+          </div>
+          {/* Phone */}
           <label htmlFor="phone">Phone</label>
           <input
-            name="phone"
+            {...register("phone")}
             id="phone"
             type="number"
-            className="w-[100%] bg-gray-100 rounded-sm shadow-sm hover:bg-gray-300 mb-2"
+            className="w-[100%] bg-gray-100 rounded-[2px] shadow-sm hover:bg-gray-300 mb-2 h-8"
           />
+          {errors.phone && (
+            <p className="text-red-500">{errors.phone.message}</p>
+          )}
+
           <button
             type="submit"
             className="bg-blue-400 mt-3 rounded-sm cursor-pointer text-white hover:bg-blue-600"
           >
-            Register
+            {isLoading ? "Loading..." : "Register"}
           </button>
         </form>
       </div>
       <p>
         Have an account? Sign In{" "}
-        <Link href="" className="text-blue-400">
+        <Link href="/login" className="text-blue-400">
           Here
         </Link>
       </p>

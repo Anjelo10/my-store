@@ -1,7 +1,9 @@
+import LoginPageView from "@/app/components/views/Login/page";
+
 const LoginPage = () => {
   return (
     <div>
-      <h1>Ini Login</h1>
+      <LoginPageView />
     </div>
   );
 };

@@ -16,7 +16,7 @@ const firestore = getFirestore(app);
 // Tipe untuk data dokumen
 type FirestoreDocument = {
   id: string;
-  [key: string]: any; // Untuk bidang dinamis dalam dokumen
+  [key: string]: unknown; // Untuk bidang dinamis dalam dokumen
 };
 
 // Tipe untuk data pengguna
@@ -45,7 +45,7 @@ export async function retrieveData(
 export async function retrieveDataById(
   collectionName: string,
   id: string
-): Promise<any | null> {
+): Promise<unknown | null> {
   const snapshot = await getDoc(doc(firestore, collectionName, id));
   const data = snapshot.data();
   return data || null;

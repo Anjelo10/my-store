@@ -3,7 +3,6 @@ import { compare } from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
-import { JWT } from "next-auth/jwt";
 import { Session } from "next-auth";
 
 // Define types for our user and session
@@ -14,7 +13,7 @@ interface UserDocument {
   password: string;
   phone: string;
   role: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 // Extended session type
@@ -24,7 +23,7 @@ interface ExtendedSession extends Session {
     fullname?: string;
     phone?: string;
     role?: string;
-    [key: string]: any;
+    [key: string]: unknown;
   };
 }
 

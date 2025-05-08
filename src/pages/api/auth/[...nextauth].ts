@@ -3,6 +3,30 @@ import { compare } from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
+import { JWT } from "next-auth/jwt";
+import { Session } from "next-auth";
+
+// Define types for our user and session
+interface UserDocument {
+  id: string;
+  email: string;
+  fullname: string;
+  password: string;
+  phone: string;
+  role: string;
+  [key: string]: any;
+}
+
+// Extended session type
+interface ExtendedSession extends Session {
+  user: {
+    email?: string;
+    fullname?: string;
+    phone?: string;
+    role?: string;
+    [key: string]: any;
+  };
+}
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -22,42 +46,46 @@ export const authOptions: NextAuthOptions = {
           email: string;
           password: string;
         };
-        const user: any = await signIn(email);
+        const user = (await signIn(email)) as UserDocument | null;
+
         if (user) {
           const passwordConfirm = await compare(password, user.password);
           if (passwordConfirm) {
             return user;
-          } else {
-            return null;
           }
         }
+        return null;
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, account, profile, user }: any) {
-      if (account?.provider === "credentials") {
-        token.email = user.email;
-        token.fullname = user.fullname;
-        token.phone = user.phone;
-        token.role = user.role;
+    async jwt({ token, account, user }) {
+      if (account?.provider === "credentials" && user) {
+        const typedUser = user as UserDocument;
+        token.email = typedUser.email;
+        token.fullname = typedUser.fullname;
+        token.phone = typedUser.phone;
+        token.role = typedUser.role;
       }
       return token;
     },
-    async session({ session, token }: any) {
+    async session({ session, token }) {
+      const extendedSession = session as ExtendedSession;
+
       if ("email" in token) {
-        session.user.email = token.email;
+        extendedSession.user.email = token.email as string;
       }
       if ("fullname" in token) {
-        session.user.fullname = token.email;
+        extendedSession.user.fullname = token.fullname as string;
       }
       if ("phone" in token) {
-        session.user.phone = token.email;
+        extendedSession.user.phone = token.phone as string;
       }
       if ("role" in token) {
-        session.user.role = token.email;
+        extendedSession.user.role = token.role as string;
       }
-      return session;
+
+      return extendedSession;
     },
   },
   pages: {

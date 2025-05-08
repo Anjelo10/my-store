@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
+import { FaEye } from "react-icons/fa6";
+import { FaEyeSlash } from "react-icons/fa6";
 
 // Define schema using zod
 const schema = z.object({
@@ -20,8 +22,9 @@ const LoginView = () => {
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const callbackUrl = searchParams?.get("callbackUrl") || "/login";
+  const callbackUrl = searchParams?.get("callbackUrl") || "/";
   const {
     register,
     handleSubmit,
@@ -48,10 +51,15 @@ const LoginView = () => {
         setIsLoading(false);
         setError("Email atau password salah");
       }
-    } catch (error) {
+    } catch (error: unknown) {
+      console.error("Login error:", error);
       setIsLoading(false);
       setError("Email atau password salah");
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -72,16 +80,27 @@ const LoginView = () => {
             <p className="text-red-500">{errors.email.message}</p>
           )}
           {/* Passowrd */}
-          <label htmlFor="password">Password</label>
-          <input
-            {...register("password")}
-            id="password"
-            type="password"
-            className="w-[100%] bg-gray-100 rounded-[2px] shadow-sm hover:bg-gray-300 mb-2 h-8"
-          />
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
-          )}
+          <div className="relative">
+            <label htmlFor="password">Password</label>
+            <input
+              {...register("password")}
+              id="password"
+              type={showPassword ? "text" : "password"}
+              className="w-[100%] bg-gray-100 rounded-[2px] shadow-sm hover:bg-gray-300 mb-2 h-8"
+            />
+            {errors.password && (
+              <p className="text-red-500">{errors.password.message}</p>
+            )}
+
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute right-3 top-10 transform -translate-y-1/2 "
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+
           {/* Button */}
           <button
             type="submit"

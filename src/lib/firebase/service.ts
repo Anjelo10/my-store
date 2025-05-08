@@ -51,36 +51,25 @@ export async function retrieveDataById(
   return data || null;
 }
 
-export async function signUp(
-  userData: UserData,
-  callback: SignUpCallback
-): Promise<void> {
+export async function signUp(userData: UserData): Promise<boolean> {
   const q = query(
     collection(firestore, "users"),
     where("email", "==", userData.email)
   );
   const snapshot = await getDocs(q);
-  const data = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-  if (data.length > 0) {
-    callback(false);
-  } else {
-    if (!userData.role) {
-      userData.role = "member";
-    }
-    userData.password = await bcrypt.hash(userData.password, 10);
-    await addDoc(collection(firestore, "users"), userData)
-      .then(() => {
-        callback(true);
-      })
-      .catch((error) => {
-        callback(false);
-        console.error("Error adding user:", error);
-      });
-  }
+
+  if (!snapshot.empty) return false;
+
+  const newUser = {
+    ...userData,
+    password: await bcrypt.hash(userData.password, 10),
+    role: userData.role || "member",
+  };
+
+  await addDoc(collection(firestore, "users"), newUser);
+  return true;
 }
+
 
 export async function signIn(email: string): Promise<FirestoreDocument | null> {
   const q = query(collection(firestore, "users"), where("email", "==", email));

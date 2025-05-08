@@ -23,7 +23,7 @@ interface ExtendedSession extends Session {
     fullname?: string;
     phone?: string;
     role?: string;
-    [key: string]: unknown;
+    [key: string]: any;
   };
 }
 

@@ -70,7 +70,6 @@ export async function signUp(userData: UserData): Promise<boolean> {
   return true;
 }
 
-
 export async function signIn(email: string): Promise<FirestoreDocument | null> {
   const q = query(collection(firestore, "users"), where("email", "==", email));
   const snapshot = await getDocs(q);
@@ -84,4 +83,22 @@ export async function signIn(email: string): Promise<FirestoreDocument | null> {
   } else {
     return null;
   }
+}
+
+export async function loginWithGoogle(data: any, callback: Function) {
+  const q = query(
+    collection(firestore, "users"),
+    where("email", "==", data.email)
+  );
+  const snapshot = await getDocs(q);
+  const user = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  if (user.length > 0) {
+    callback(user[0]);
+  }
+  await addDoc(collection(firestore, "users"), data).then(() => {
+    callback(data);
+  });
 }

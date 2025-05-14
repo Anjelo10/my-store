@@ -1,9 +1,10 @@
-import { signIn } from "@/lib/firebase/service";
+import { loginWithGoogle, signIn } from "@/lib/firebase/service";
 import { compare } from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 import { Session } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 
 // Define types for our user and session
 interface UserDocument {
@@ -56,6 +57,10 @@ export const authOptions: NextAuthOptions = {
         return null;
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_OAUTH_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET || "",
+    }),
   ],
   callbacks: {
     async jwt({ token, account, user }) {
@@ -65,6 +70,18 @@ export const authOptions: NextAuthOptions = {
         token.fullname = typedUser.fullname;
         token.phone = typedUser.phone;
         token.role = typedUser.role;
+      }
+      if (account?.provider === "google") {
+        const data = {
+          fullname: user.name,
+          email: user.email,
+          type: "google",
+        };
+        await loginWithGoogle(data, (data: any) => {
+          token.email = data.email;
+          token.fullname = data.fullname;
+          token.role = data.role;
+        });
       }
       return token;
     },

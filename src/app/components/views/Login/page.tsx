@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
+import { FaGoogle } from "react-icons/fa";
 
 // Define schema using zod
 const schema = z.object({
@@ -104,13 +105,24 @@ const LoginView = () => {
           {/* Button */}
           <button
             type="submit"
-            className="bg-blue-400 mt-3 rounded-sm cursor-pointer text-white hover:bg-blue-600"
+            className="py-1 font-medium bg-yellow-500 mt-3 rounded-sm cursor-pointer text-white hover:bg-yellow-600"
             disabled={isLoading}
           >
             {isLoading ? "Loading..." : "Login"}
           </button>
           {error && <p className="text-red-500">{error}</p>}
         </form>
+        <div className="flex flex-col ">
+          <hr className="my-5" />
+          <button
+            type="button"
+            onClick={() => signIn("google", { callbackUrl })}
+            className="py-1 font-medium bg-yellow-500 text-white rounded-sm cursor-pointer px-2 hover:bg-yellow-600 flex items-center justify-center "
+          >
+            <FaGoogle className="mr-2" />
+            Login With Google
+          </button>
+        </div>
       </div>
       <p>
         Belum Memiliki akun? Sign In{" "}

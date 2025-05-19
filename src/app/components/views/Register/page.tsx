@@ -12,18 +12,7 @@ import { FaEyeSlash } from "react-icons/fa6";
 const schema = z.object({
   email: z.string().email({ message: "Email Tidak Sah" }),
   fullname: z.string().min(1, { message: "Minimal harus 1 karakter" }),
-  password: z
-    .string()
-    .min(6, { message: "Minimal harus 6 karakter" })
-    .regex(/[A-Z]/, {
-      message: "Harus mengandung minimal 1 huruf besar",
-    })
-    .regex(/[0-9]/, {
-      message: "Harus mengandung minimal 1 angka",
-    })
-    .regex(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/, {
-      message: "Harus mengandung minimal 1 karakter khusus",
-    }),
+  password: z.string().min(6, { message: "Minimal harus 6 karakter" }),
   phone: z
     .string()
     .min(10, { message: "Minimal harus 10 karakter" })

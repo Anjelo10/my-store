@@ -7,9 +7,11 @@ import {
   getFirestore,
   query,
   where,
+  serverTimestamp,
 } from "firebase/firestore";
 import app from "./init";
 import bcrypt from "bcrypt";
+import { create } from "domain";
 
 const firestore = getFirestore(app);
 
@@ -51,6 +53,23 @@ export async function retrieveDataById(
   return data || null;
 }
 
+export async function retrieveDataByField(
+  collectionName: string,
+  field: string,
+  value: string
+) {
+  const q = query(
+    collection(firestore, collectionName),
+    where(field, "==", value)
+  );
+  const snapshot = await getDocs(q);
+  const data = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  return data;
+}
+
 export async function signUp(userData: UserData): Promise<boolean> {
   const q = query(
     collection(firestore, "users"),
@@ -64,41 +83,10 @@ export async function signUp(userData: UserData): Promise<boolean> {
     ...userData,
     password: await bcrypt.hash(userData.password, 10),
     role: userData.role || "member",
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
   };
 
   await addDoc(collection(firestore, "users"), newUser);
   return true;
-}
-
-export async function signIn(email: string): Promise<FirestoreDocument | null> {
-  const q = query(collection(firestore, "users"), where("email", "==", email));
-  const snapshot = await getDocs(q);
-  const data = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-
-  if (data && data.length > 0) {
-    return data[0];
-  } else {
-    return null;
-  }
-}
-
-export async function loginWithGoogle(data: any, callback: Function) {
-  const q = query(
-    collection(firestore, "users"),
-    where("email", "==", data.email)
-  );
-  const snapshot = await getDocs(q);
-  const user = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-  if (user.length > 0) {
-    callback(user[0]);
-  }
-  await addDoc(collection(firestore, "users"), data).then(() => {
-    callback(data);
-  });
 }

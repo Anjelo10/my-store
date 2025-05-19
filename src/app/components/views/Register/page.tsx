@@ -7,6 +7,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
+import { authService } from "@/app/services/auth/index";
 
 // Variabel Scema yang di devinisikan dengan ZOD
 const schema = z.object({
@@ -39,13 +40,7 @@ const RegisterView = () => {
     setIsLoading(true);
     setError("");
 
-    const result = await fetch("/api/user/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const result = await authService.registerAccount(data);
 
     if (result.status === 200) {
       push("/login");

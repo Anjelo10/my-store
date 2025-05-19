@@ -1,4 +1,4 @@
-import { loginWithGoogle, signIn } from "@/app/services/auth/page";
+import { loginWithGoogle, signIn } from "@/app/services/auth/authService";
 import { compare } from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";

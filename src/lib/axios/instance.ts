@@ -13,15 +13,13 @@ const instance = axios.create({
 });
 
 instance.interceptors.response.use(
-  (config) => config,
+  (response) => response,
   (error) => Promise.reject(error)
 );
 
 instance.interceptors.request.use(
-  (response) => response,
-  (error) => {
-    Promise.reject(error);
-  }
+  (config) => config,
+  (error) => Promise.reject(error)
 );
 
 export default instance;

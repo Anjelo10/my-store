@@ -7,7 +7,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
-import { authService } from "@/app/services/auth/index";
+import { authService } from "@/services/auth/index";
 
 // Variabel Scema yang di devinisikan dengan ZOD
 const schema = z.object({

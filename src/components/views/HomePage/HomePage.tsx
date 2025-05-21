@@ -12,7 +12,7 @@ const HomePage = () => {
           <p className="text-shadow-lg  w-sm text-md">
             Ciptakan Kebahagiaan dengan cemilam enbal sejuta rasa
           </p>
-          <button className="text-white text-xl bg-theme-primary px-2 rounded-sm mt-7 ">
+          <button className="text-white text-xl bg-yellow-500 px-2 rounded-sm mt-7 ">
             Order Now
           </button>
         </div>

@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { assets } from "../asset/assets";
+import { assets } from "../../asset/assets";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
@@ -30,14 +30,6 @@ const Navbar = () => {
           Contact
         </Link>
       </div>
-
-      {/* <ul className="hidden md:flex items-center gap-4 ">
-        <Image className="w-4 h-4"  alt="search icon" />
-        <button className="cursor-pointer flex items-center gap-2 text-white transition bg-yellow-600 hover:bg-yellow-500 px-2 py-0.5 rounded-md">
-          Sign In
-        </button>
-      </ul> */}
-
       <div className="flex items-center  gap-3">
         <button
           onClick={() => (data ? signOut() : signIn())}

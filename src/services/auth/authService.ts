@@ -2,7 +2,6 @@ import { retrieveDataByField } from "@/lib/firebase/service";
 import { addDoc, collection } from "firebase/firestore";
 import app from "@/lib/firebase/init";
 import { getFirestore } from "firebase/firestore";
-import instance from "@/lib/axios/instance";
 
 const firestore = getFirestore(app);
 

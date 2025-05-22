@@ -43,7 +43,7 @@ const RegisterView = () => {
     const result = await authService.registerAccount(data);
 
     if (result.status === 200) {
-      push("/login");
+      push("/auth/login");
     } else {
       setError("Email sudah terdaftar");
     }
@@ -134,7 +134,7 @@ const RegisterView = () => {
           </div>
           <p>
             Have an account? Sign In{" "}
-            <Link href="/login" className="text-blue-400">
+            <Link href="/auth/login" className="text-blue-400">
               Here
             </Link>
           </p>

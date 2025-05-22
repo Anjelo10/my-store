@@ -75,6 +75,7 @@ export const authOptions: NextAuthOptions = {
         const data = {
           fullname: user.name,
           email: user.email,
+          role: "member",
           type: "google",
         };
         await loginWithGoogle(data, (data: any) => {
@@ -105,7 +106,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: "/login",
+    signIn: "/auth/login",
   },
 };
 

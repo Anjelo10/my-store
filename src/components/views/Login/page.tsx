@@ -126,7 +126,7 @@ const LoginView = () => {
       </div>
       <p>
         Belum Memiliki akun? Sign In{" "}
-        <Link href="/register" className="text-blue-400">
+        <Link href="/auth/register" className="text-blue-400">
           Here
         </Link>
       </p>

@@ -20,18 +20,30 @@ export async function signIn(email: string): Promise<FirestoreDocument | null> {
   }
 }
 
-export async function loginWithGoogle(data: any, callback: Function) {
+export async function loginWithGoogle(
+  data: {
+    email: string;
+    role?: string;
+    password?: string;
+    create_at?: Date;
+    update_at?: Date;
+  },
+  callback: Function
+) {
   try {
     const user = await retrieveDataByField("users", "email", data.email);
 
     if (user && user.length > 0) {
       return callback(user[0]);
+    } else {
+      data.role = "member";
+      data.create_at = new Date();
+      data.update_at = new Date();
+      data.password = "";
     }
 
-    // Jika user belum ada, buat user baru
     const docRef = await addDoc(collection(firestore, "users"), data);
 
-    // Tambahkan ID ke data untuk dikembalikan
     const newUserData = { id: docRef.id, ...data };
     return callback(newUserData);
   } catch (error: unknown) {

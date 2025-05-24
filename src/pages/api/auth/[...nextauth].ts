@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 import { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { create } from "domain";
 
 // Define types for our user and session
 interface UserDocument {
@@ -73,8 +74,8 @@ export const authOptions: NextAuthOptions = {
       }
       if (account?.provider === "google") {
         const data = {
-          fullname: user.name,
-          email: user.email,
+          fullname: user.name!,
+          email: user.email!,
           role: "member",
           type: "google",
         };

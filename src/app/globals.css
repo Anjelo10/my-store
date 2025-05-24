@@ -5,3 +5,10 @@
   -webkit-appearance: none;
   margin: 0;
 }
+
+.table-custom th {
+  @apply px-4 text-left font-semibold;
+}
+.table-custom td {
+  @apply px-4 py-4 text-left;
+}

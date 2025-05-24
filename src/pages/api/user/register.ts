@@ -5,10 +5,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log("Register API called");
-  console.log("Request method:", req.method);
-  console.log("Request body:", req.body);
-
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method Not Allowed" });
   }

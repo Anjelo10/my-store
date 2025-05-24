@@ -4,7 +4,9 @@ const ProductsAdminView = () => {
   return (
     <div>
       <AdminLayout>
-        <div></div>
+        <div>
+          <h1>Products</h1>
+        </div>
       </AdminLayout>
     </div>
   );

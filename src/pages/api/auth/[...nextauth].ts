@@ -5,7 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 import { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { create } from "domain";
+import jwt from "jsonwebtoken";
 
 // Define types for our user and session
 interface UserDocument {
@@ -21,10 +21,10 @@ interface UserDocument {
 // Extended session type
 interface ExtendedSession extends Session {
   user: {
-    email?: string;
-    fullname?: string;
-    phone?: string;
-    role?: string;
+    email: string;
+    fullname: string;
+    phone: string;
+    role: string;
     [key: string]: any;
   };
 }
@@ -102,6 +102,12 @@ export const authOptions: NextAuthOptions = {
       if ("role" in token) {
         extendedSession.user.role = token.role as string;
       }
+
+      const accessToken = jwt.sign(token, process.env.NEXTAUTH_SECRET || "", {
+        algorithm: "HS256",
+      });
+
+      extendedSession.user.accessToken = accessToken;
 
       return extendedSession;
     },

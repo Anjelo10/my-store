@@ -2,10 +2,12 @@
 import Modal from "@/components/ui/Modal/Modal";
 import Select from "@/components/ui/Select/Select";
 import userServices from "@/services/users";
+import { useSession } from "next-auth/react";
 import { FormEvent, useState } from "react";
 
 const ModalUpdateUser = (props: any) => {
   const { updatedUser, setUpdatedUser, setUsersData } = props;
+  const session: any = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -17,7 +19,11 @@ const ModalUpdateUser = (props: any) => {
       role: form.role.value,
     };
     try {
-      const result = await userServices.updateUser(updatedUser.id, data);
+      const result = await userServices.updateUser(
+        updatedUser.id,
+        data,
+        session.data?.user?.accessToken
+      );
       console.log("Berhasil update:", result);
     } catch (error) {
       console.error("Gagal update:", error);

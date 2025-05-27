@@ -44,7 +44,6 @@ const LoginView = () => {
         password: data.password,
         callbackUrl,
       });
-      console.log("Login response:", res);
       if (!res?.error) {
         setIsLoading(false);
         push(callbackUrl);

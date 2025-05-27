@@ -25,6 +25,7 @@ export async function loginWithGoogle(
     email: string;
     role?: string;
     password?: string;
+    image: string;
     create_at?: Date;
     update_at?: Date;
   },

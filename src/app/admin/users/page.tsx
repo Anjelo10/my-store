@@ -1,10 +1,12 @@
 "use client";
+import { useToaster } from "@/components/common/ToasterWrapper";
 import AdminUsersView from "@/components/views/admin/Users/page";
 import userServices from "@/services/users";
 import { useEffect, useState } from "react";
 
 const AdminUsersPage = () => {
   const [users, setUsers] = useState([]);
+  const { showToast }: any = useToaster();
   useEffect(() => {
     const getAllUsers = async () => {
       const { data } = await userServices.getAllUsers();
@@ -12,10 +14,9 @@ const AdminUsersPage = () => {
     };
     getAllUsers();
   }, []);
-  console.log(users);
   return (
     <>
-      <AdminUsersView users={users} />
+      <AdminUsersView users={users} showToast={showToast} />
     </>
   );
 };

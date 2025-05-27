@@ -2,12 +2,21 @@
 import Modal from "@/components/ui/Modal/Modal";
 import Select from "@/components/ui/Select/Select";
 import userServices from "@/services/users";
+import { User } from "@/type/users.type";
 import { useSession } from "next-auth/react";
-import { FormEvent, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 
-const ModalUpdateUser = (props: any) => {
-  const { updatedUser, setUpdatedUser, setUsersData } = props;
-  const session: any = useSession();
+type Proptypes = {
+  updatedUser: User | any;
+  setUsersData: Dispatch<SetStateAction<User[]>>;
+  showToast: any;
+  setUpdatedUser: Dispatch<SetStateAction<{}>>;
+  session: any;
+};
+
+const ModalUpdateUser = (props: Proptypes) => {
+  const { updatedUser, setUpdatedUser, setUsersData, showToast, session } =
+    props;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -24,15 +33,16 @@ const ModalUpdateUser = (props: any) => {
         data,
         session.data?.user?.accessToken
       );
-      console.log("Berhasil update:", result);
     } catch (error) {
       console.error("Gagal update:", error);
       setError("Update gagal");
+      showToast("Update gagal", "danger");
     } finally {
       setIsLoading(false);
       setUpdatedUser({});
       const { data } = await userServices.getAllUsers();
       setUsersData(data.data);
+      showToast("Update berhasil", "success");
     }
   };
   return (
@@ -84,7 +94,7 @@ const ModalUpdateUser = (props: any) => {
             type="submit"
             className="cursor-pointer flex my-3 items-center gap-2 hover:bg-yellow-600 transition bg-yellow-500 py-1 px-2 rounded-md"
           >
-            Update
+            {isLoading ? "Loading..." : "Update"}
           </button>
         </form>
       </Modal>

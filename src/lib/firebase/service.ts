@@ -49,6 +49,19 @@ export async function retrieveDataById(
   collectionName: string,
   id: string
 ): Promise<unknown | null> {
+  if (!collectionName || !id) {
+    throw new Error(
+      `retrieveDataById: Parameter tidak valid — collectionName: ${collectionName}, id: ${id}`
+    );
+  }
+
+  console.log(
+    "📄 [retrieveDataById] collectionName:",
+    collectionName,
+    "id:",
+    id
+  );
+
   const snapshot = await getDoc(doc(firestore, collectionName, id));
   const data = snapshot.data();
   return data || null;
@@ -59,6 +72,12 @@ export async function retrieveDataByField(
   field: string,
   value: string
 ) {
+  if (!collectionName || !field || value === undefined) {
+    throw new Error(
+      `retrieveDataByField: Parameter tidak valid - collection: ${collectionName}, field: ${field}, value: ${value}`
+    );
+  }
+
   const q = query(
     collection(firestore, collectionName),
     where(field, "==", value)

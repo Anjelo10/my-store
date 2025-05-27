@@ -5,6 +5,7 @@ import { Poppins } from "next/font/google";
 import SessionProvider from "@/components/sessionprovider/SessionProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { ToasterProvider } from "@/components/common/ToasterWrapper";
 
 const popinsSans = Poppins({
   subsets: ["latin"],
@@ -22,10 +23,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <body className={` ${popinsSans.className} antialiased`}>
-        <SessionProvider session={session}>{children}</SessionProvider>
+        <SessionProvider session={session}>
+          <ToasterProvider>{children}</ToasterProvider>
+        </SessionProvider>
       </body>
     </html>
   );

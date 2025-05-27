@@ -23,19 +23,19 @@ export default async function heandler(
       token,
       process.env.NEXTAUTH_SECRET || " ",
       async (err: any, decoded: any) => {
-        if (decoded && decoded.role === "admin") {
+        if (decoded.role === "admin") {
           await updateData("users", user[2], data, (result: boolean) => {
             if (result) {
               res.status(200).json({
                 status: true,
                 statusCode: 200,
-                message: "succsess",
+                message: "Berhasil Update Profile",
               });
             } else {
               res.status(400).json({
                 status: false,
                 statusCode: 400,
-                message: "failed",
+                message: "Gagal Update Profile",
               });
             }
           });
@@ -43,13 +43,12 @@ export default async function heandler(
           res.status(403).json({
             status: false,
             statusCode: 400,
-            message: "failed",
+            message: "Anda Tidak Memiliki Akses",
           });
         }
       }
     );
     res.status(200).json({ status: true, statusCode: 200, message: "Succses" });
-    //
   } else if (req.method === "DELETE") {
     const { user }: any = req.query;
     const token = req.headers.authorization?.split(" ")[1] || "";
@@ -59,7 +58,6 @@ export default async function heandler(
       process.env.NEXTAUTH_SECRET || " ",
 
       async (err: any, decoded: any) => {
-        console.log(decoded);
         if (decoded && decoded.role === "admin") {
           await deleteData("users", user[2], (result: boolean) => {
             if (result) {

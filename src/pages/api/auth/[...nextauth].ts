@@ -7,7 +7,6 @@ import { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import jwt from "jsonwebtoken";
 
-// Define types for our user and session
 interface UserDocument {
   id: string;
   email: string;
@@ -18,7 +17,6 @@ interface UserDocument {
   [key: string]: unknown;
 }
 
-// Extended session type
 interface ExtendedSession extends Session {
   user: {
     email: string;
@@ -71,18 +69,22 @@ export const authOptions: NextAuthOptions = {
         token.fullname = typedUser.fullname;
         token.phone = typedUser.phone;
         token.role = typedUser.role;
+        token.id = typedUser.id;
       }
       if (account?.provider === "google") {
         const data = {
           fullname: user.name!,
           email: user.email!,
           role: "member",
+          image: user.image!,
           type: "google",
         };
         await loginWithGoogle(data, (data: any) => {
           token.email = data.email;
           token.fullname = data.fullname;
           token.role = data.role;
+          token.image = data.image;
+          token.id = data.id;
         });
       }
       return token;
@@ -101,6 +103,12 @@ export const authOptions: NextAuthOptions = {
       }
       if ("role" in token) {
         extendedSession.user.role = token.role as string;
+      }
+      if ("image" in token) {
+        extendedSession.user.image = token.image as string;
+      }
+      if ("id" in token) {
+        extendedSession.user.id = token.id as string;
       }
 
       const accessToken = jwt.sign(token, process.env.NEXTAUTH_SECRET || "", {

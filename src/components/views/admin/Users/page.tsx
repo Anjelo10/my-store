@@ -3,16 +3,24 @@ import AdminLayout from "@/components/Layout/AdminLayout/page";
 import { useEffect, useState } from "react";
 import ModalUpdateUser from "./ModalUpdateUser";
 import ModalDeleteUser from "./ModalDeleteUser";
+import { User } from "@/type/users.type";
+import { useSession } from "next-auth/react";
 
 type Proptypes = {
-  users: any;
+  users: User[];
+  showToast: (
+    message: string,
+    variant?: "success" | "error" | "warning"
+  ) => void;
 };
 
 const AdminUsersView = (props: Proptypes) => {
-  const { users } = props;
-  const [updatedUser, setUpdatedUser] = useState<any>({});
-  const [deletedUser, setDeletedUser] = useState<any>({});
-  const [usersData, setUsersData] = useState([]);
+  const { users, showToast } = props;
+  const [updatedUser, setUpdatedUser] = useState<User | {}>({});
+  const [deletedUser, setDeletedUser] = useState<User | {}>({});
+  const [usersData, setUsersData] = useState<User[]>([]);
+  const session: any = useSession();
+
   useEffect(() => {
     setUsersData(users);
   }, [users]);
@@ -32,7 +40,7 @@ const AdminUsersView = (props: Proptypes) => {
               </tr>
             </thead>
             <tbody>
-              {usersData.map((user: any, index: number) => (
+              {usersData.map((user: User, index: number) => (
                 <tr
                   key={index}
                   className={index % 2 === 0 ? "bg-gray-100" : ""}
@@ -70,6 +78,8 @@ const AdminUsersView = (props: Proptypes) => {
           updatedUser={updatedUser}
           setUpdatedUser={setUpdatedUser}
           setUsersData={setUsersData}
+          showToast={showToast}
+          session={session}
         />
       )}
       {Object.keys(deletedUser).length > 0 && (
@@ -77,6 +87,8 @@ const AdminUsersView = (props: Proptypes) => {
           deletedUser={deletedUser}
           setDeletedUser={setDeletedUser}
           setUsersData={setUsersData}
+          showToast={showToast}
+          session={session}
         />
       )}
     </>

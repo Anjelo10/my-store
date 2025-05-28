@@ -2,8 +2,6 @@
 import Modal from "@/components/ui/Modal/Modal";
 import userServices from "@/services/users";
 import { User } from "@/type/users.type";
-import { useSession } from "next-auth/react";
-import { Props } from "next/script";
 import { Dispatch, SetStateAction, use, useState } from "react";
 
 type Proptype = {

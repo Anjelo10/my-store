@@ -1,6 +1,6 @@
 "use client";
 import AdminLayout from "@/components/Layout/AdminLayout/page";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import ModalUpdateUser from "./ModalUpdateUser";
 import ModalDeleteUser from "./ModalDeleteUser";
 import { User } from "@/type/users.type";
@@ -20,6 +20,7 @@ const AdminUsersView = (props: Proptypes) => {
   const [deletedUser, setDeletedUser] = useState<User | {}>({});
   const [usersData, setUsersData] = useState<User[]>([]);
   const session: any = useSession();
+  console.log(usersData);
 
   useEffect(() => {
     setUsersData(users);

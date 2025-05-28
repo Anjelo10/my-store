@@ -59,11 +59,13 @@ const ProfileMemberView = ({
             height={100}
             className="rounded-full"
           />
-          <h1 className="text-xl font-semibold">{profile.fullname}</h1>
+          <h1 className="text-xl font-bold mt-3 text-shadow-lg">
+            {profile.fullname}
+          </h1>
         </div>
         <div className="w-[75%] h-[350px] shadow-md">
           <form onSubmit={handleChangeProfile} className="flex flex-col  m-4">
-            <label className="ml-2 text-sm">Fullname</label>
+            <label className="ml-2 text-sm ">Fullname</label>
             <input
               type="text"
               name="fullname"

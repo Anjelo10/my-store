@@ -14,7 +14,7 @@ export default async function heandler(
     });
     res
       .status(200)
-      .json({ status: true, statusCode: 200, message: "Succses", data });
+      .json({ status: true, statusCode: 200, message: "Sukses Sekali", data });
   } else if (req.method === "PUT") {
     const { user }: any = req.query;
     const { data } = req.body;

@@ -37,7 +37,7 @@ export default async function handler(
             message: "Unauthorized",
           });
         if (decoded && decoded.role === "admin") {
-          let data = req.body;
+          const data = req.body;
           data.createdAt = new Date();
           data.updatedAt = new Date();
           data.price = parseInt(data.price);

@@ -11,8 +11,8 @@ const CartPage = () => {
   const session: any = useSession();
   const [products, setProducts] = useState([]);
 
-  const getCart = async (token: string) => {
-    const { data } = await userServices.getCart(token);
+  const getCart = async () => {
+    const { data } = await userServices.getCart();
     setCart(data.data);
   };
 
@@ -26,7 +26,7 @@ const CartPage = () => {
 
   useEffect(() => {
     if (session.data?.user?.accessToken) {
-      getCart(session.data?.user?.accessToken);
+      getCart();
     }
   }, [session]);
 

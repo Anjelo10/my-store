@@ -10,12 +10,10 @@ type Proptypes = {
   setUsersData: Dispatch<SetStateAction<User[]>>;
   showToast: any;
   setUpdatedUser: Dispatch<SetStateAction<{}>>;
-  session: any;
 };
 
 const ModalUpdateUser = (props: Proptypes) => {
-  const { updatedUser, setUpdatedUser, setUsersData, showToast, session } =
-    props;
+  const { updatedUser, setUpdatedUser, setUsersData, showToast } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -27,11 +25,7 @@ const ModalUpdateUser = (props: Proptypes) => {
       role: form.role.value,
     };
     try {
-      const result = await userServices.updateUser(
-        updatedUser.id,
-        data,
-        session.data?.user?.accessToken
-      );
+      const result = await userServices.updateUser(updatedUser.id, data);
     } catch (error) {
       console.error("Gagal update:", error);
       setError("Update gagal");

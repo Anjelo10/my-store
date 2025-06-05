@@ -83,7 +83,6 @@ const AdminUsersView = (props: Proptypes) => {
           setUpdatedUser={setUpdatedUser}
           setUsersData={setUsersData}
           showToast={showToast}
-          session={session}
         />
       )}
       {Object.keys(deletedUser).length > 0 && (
@@ -92,7 +91,6 @@ const AdminUsersView = (props: Proptypes) => {
           setDeletedUser={setDeletedUser}
           setUsersData={setUsersData}
           showToast={showToast}
-          session={session}
         />
       )}
     </>

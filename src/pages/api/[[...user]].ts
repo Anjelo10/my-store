@@ -7,14 +7,32 @@ export default async function heandler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
+    const token = req.headers.authorization?.split(" ")[1] || "";
     const users = await retrieveData("users");
-    const data = users.map((user: any) => {
-      delete user.password;
-      return user;
-    });
-    res
-      .status(200)
-      .json({ status: true, statusCode: 200, message: "Sukses Sekali", data });
+    jwt.verify(
+      token,
+      process.env.NEXTAUTH_SECRET || " ",
+      async (err: any, decoded: any) => {
+        if (decoded && decoded.role === "admin") {
+          const data = users.map((user: any) => {
+            delete user.password;
+            return user;
+          });
+          res.status(200).json({
+            status: true,
+            statusCode: 200,
+            message: "Sukses Sekali",
+            data,
+          });
+        } else {
+          res.status(403).json({
+            status: false,
+            statusCode: 403,
+            message: "Anda Tidak Memiliki Akses",
+          });
+        }
+      }
+    );
   } else if (req.method === "PUT") {
     const { user }: any = req.query;
     const { data } = req.body;

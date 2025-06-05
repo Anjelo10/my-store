@@ -1,57 +1,24 @@
 import instance from "@/lib/axios/instance";
+import { profile } from "console";
+
+const endpoint = {
+  users: "/api/user/userman",
+  cart: "/api/user/cart",
+  profile: "/api/user/profile",
+};
 
 export const userServices = {
-  getAllUsers: () => instance.get("/api/user/userman"),
+  getAllUsers: () => instance.get(endpoint.users),
 
-  updateUser: (id: string, data: any, token: string) =>
-    instance.put(
-      `/api/user/userman/${id}`,
-      { data },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    ),
-  deleteUser: (id: string, token: string) => {
-    return instance.delete(`/api/user/userman/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  updateUser: (id: string, data: any) =>
+    instance.put(`${endpoint.users}/${id}`, { data }),
+  deleteUser: (id: string) => {
+    return instance.delete(`${endpoint.users}/${id}`);
   },
-  getUserProfile: (token: string) =>
-    instance.get("/api/user/profile", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }),
-  updateProfile: (data: any, token: string) =>
-    instance.put(
-      `/api/user/profile`,
-      { data },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    ),
-  getCart: (token: string) =>
-    instance.get("/api/user/cart", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }),
-  addToCart: (data: any, token: string) =>
-    instance.put(
-      `/api/user/cart`,
-      { data },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    ),
+  getUserProfile: () => instance.get(endpoint.profile),
+  updateProfile: (data: any) => instance.put(endpoint.profile, { data }),
+  getCart: () => instance.get(endpoint.cart),
+  addToCart: (data: any) => instance.put(endpoint.cart, { data }),
 };
 
 export default userServices;

@@ -1,9 +1,7 @@
 "use client";
 import Modal from "@/components/ui/Modal/Modal";
 import productServices from "@/services/product";
-import userServices from "@/services/users";
 import { Products } from "@/type/products.type";
-import { useSession } from "next-auth/react";
 import { Dispatch, SetStateAction, use, useState } from "react";
 
 type Proptype = {
@@ -17,13 +15,9 @@ const ModalDeleteProduct = (props: Proptype) => {
   const { deletedProduct, setDeletedProduct, setProductsData, showToast } =
     props;
   const [isLoading, setLoading] = useState(false);
-  const session: any = useSession();
 
   const handleDeleteUser = async () => {
-    const result = await productServices.deleteProduct(
-      deletedProduct.id,
-      session.data?.user?.accessToken
-    );
+    const result = await productServices.deleteProduct(deletedProduct.id);
     if (result.status === 200) {
       setLoading(false);
       showToast("Produk berhasil dihapus", "success");

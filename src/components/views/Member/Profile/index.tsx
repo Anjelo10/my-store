@@ -4,26 +4,27 @@ import userServices from "@/services/users";
 import { User } from "@/type/users.type";
 
 import Image from "next/image";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 type Propstype = {
-  profile: User | any;
-  setProfile: any;
-  session: any;
   showToast: (
     message: string,
     variant?: "success" | "danger" | "warning"
   ) => void;
 };
 
-const ProfileMemberView = ({
-  profile,
-  setProfile,
-  session,
-  showToast,
-}: Propstype) => {
-  console.log(profile);
+const ProfileMemberView = ({ showToast }: Propstype) => {
   const [loading, setLoading] = useState(false);
+  const [profile, setProfile] = useState<User | any>({});
+
+  const getAllUsers = async () => {
+    const { data } = await userServices.getUserProfile();
+    setProfile(data.data);
+  };
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
   const handleChangeProfile = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form: any = e.target as HTMLFormElement;
@@ -31,10 +32,7 @@ const ProfileMemberView = ({
       fullname: form.fullname.value,
       phone: form.phone.value,
     };
-    const result = await userServices.updateProfile(
-      data,
-      session.data?.user?.accessToken
-    );
+    const result = await userServices.updateProfile(data);
     if (result.status === 200) {
       setProfile({
         ...profile,

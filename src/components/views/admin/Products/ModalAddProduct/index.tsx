@@ -31,10 +31,7 @@ const ModalAddProduct = (props: Proptypes) => {
       image: form.image.value,
       description: form.description.value,
     };
-    const result = await productServices.addProduct(
-      data,
-      session.data?.user?.accessToken
-    );
+    const result = await productServices.addProduct(data);
     if (result.status === 200) {
       setIsLoading(false);
       form.reset();

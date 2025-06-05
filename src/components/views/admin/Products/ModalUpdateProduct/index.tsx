@@ -4,7 +4,6 @@ import Modal from "@/components/ui/Modal/Modal";
 import Select from "@/components/ui/Select/Select";
 import productServices from "@/services/product";
 import { Products } from "@/type/products.type";
-import { useSession } from "next-auth/react";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 
 type Proptypes = {
@@ -18,7 +17,6 @@ const ModalUpdateProduct = (props: Proptypes) => {
   const { updatedProduct, setUpdatedProduct, setProductsData, showToast } =
     props;
   const [isLoading, setIsLoading] = useState(false);
-  const session: any = useSession();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -32,11 +30,7 @@ const ModalUpdateProduct = (props: Proptypes) => {
       image: form.image.value,
       description: form.description.value,
     };
-    const result = await productServices.updateProduct(
-      updatedProduct.id,
-      data,
-      session.data?.user?.accessToken
-    );
+    const result = await productServices.updateProduct(updatedProduct.id, data);
 
     if (result.status === 200) {
       setIsLoading(false);

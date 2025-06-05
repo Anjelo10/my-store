@@ -5,7 +5,6 @@ import { converIDR } from "@/utils/currency";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 type Proptype = {
   product: Products | any;
@@ -19,7 +18,7 @@ type Proptype = {
 
 const DetailProductView = (props: Proptype) => {
   const { product, cart, productId, showToast } = props;
-  const { status, data: session }: any = useSession();
+  const { status }: any = useSession();
   const router = useRouter();
 
   const handleAddToCart = async () => {
@@ -42,12 +41,9 @@ const DetailProductView = (props: Proptype) => {
         ];
       }
       try {
-        const result = await userServices.addToCart(
-          {
-            carts: newCart,
-          },
-          session.user?.accessToken
-        );
+        const result = await userServices.addToCart({
+          carts: newCart,
+        });
         if (result.status === 200) {
           showToast("Berhasil menambahkan ke keranjang", "success");
         }

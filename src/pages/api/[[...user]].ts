@@ -29,13 +29,13 @@ export default async function heandler(
               res.status(200).json({
                 status: true,
                 statusCode: 200,
-                message: "Berhasil Update Profile",
+                message: "Berhasil Update Role",
               });
             } else {
               res.status(400).json({
                 status: false,
                 statusCode: 400,
-                message: "Gagal Update Profile",
+                message: "Gagal Update Role",
               });
             }
           });
@@ -70,7 +70,7 @@ export default async function heandler(
               res.status(400).json({
                 status: false,
                 statusCode: 400,
-                message: "Access Denied",
+                message: "Gagal Menghapus",
               });
             }
           });
@@ -78,7 +78,7 @@ export default async function heandler(
           res.status(403).json({
             status: false,
             statusCode: 400,
-            message: "failed",
+            message: "Anda Tidak Memiliki Akses",
           });
         }
       }

@@ -20,7 +20,6 @@ const AdminUsersView = (props: Proptypes) => {
   const [deletedUser, setDeletedUser] = useState<User | {}>({});
   const [usersData, setUsersData] = useState<User[]>([]);
   const session: any = useSession();
-  console.log(usersData);
 
   useEffect(() => {
     setUsersData(users);
@@ -30,48 +29,52 @@ const AdminUsersView = (props: Proptypes) => {
       <AdminLayout>
         <div className="px-12 py-7">
           <h1 className="m-3 text-2xl font-bold">Admin Users </h1>
-          <table className="table-custom w-full border-collapse border-1 my-5 mx-3 border-gray-300 border-spacing-0 ">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Fullname</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {usersData.map((user: User, index: number) => (
-                <tr
-                  key={index}
-                  className={index % 2 === 0 ? "bg-gray-100" : ""}
-                >
-                  <td>{index + 1}</td>
-                  <td>{user.fullname}</td>
-                  <td>{user.email}</td>
-                  <td>{user.role}</td>
-                  <td>
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setUpdatedUser(user)}
-                        className="cursor-pointer bg-yellow-500 text-white px-2 rounded-sm p-2 flex items-center justify-center"
-                      >
-                        <i className="bx  bxs-edit text-xl " />
-                      </button>
-                      <button
-                        type="button"
-                        className="cursor-pointer bg-red-600 text-white px-2 rounded-sm flex items-center justify-center"
-                        onClick={() => setDeletedUser(user)}
-                      >
-                        <i className="bx  bxs-trash text-xl"></i>
-                      </button>
-                    </div>
-                  </td>
+          <div className="border border-gray-300 rounded-sm shadow-md">
+            <table className="table-custom w-full ">
+              <thead className="bg-gray-200">
+                <tr>
+                  <th>#</th>
+                  <th>Nama Panjang</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Peran</th>
+                  <th>Aksi</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {usersData.map((user: User, index: number) => (
+                  <tr
+                    key={index}
+                    className={index % 2 === 0 ? "bg-gray-100" : ""}
+                  >
+                    <td>{index + 1}</td>
+                    <td>{user.fullname}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phone}</td>
+                    <td>{user.role}</td>
+                    <td>
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setUpdatedUser(user)}
+                          className="cursor-pointer bg-yellow-500 text-white px-2 rounded-sm p-2 flex items-center justify-center"
+                        >
+                          <i className="bx  bxs-edit text-xl " />
+                        </button>
+                        <button
+                          type="button"
+                          className="cursor-pointer bg-red-600 text-white px-2 rounded-sm flex items-center justify-center"
+                          onClick={() => setDeletedUser(user)}
+                        >
+                          <i className="bx  bxs-trash text-xl"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </AdminLayout>
       {Object.keys(updatedUser).length > 0 && (

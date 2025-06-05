@@ -23,7 +23,10 @@ const Modal = ({
   }, [onClose]);
   return (
     <div className="flex fixed top-0 w-full h-full z-[1000] bg-black/50 items-center justify-center">
-      <div className=" bg-white p-5 w-[50%] max-h-[80vh]" ref={ref}>
+      <div
+        className=" bg-white p-5 w-[50%] max-h-[80vh] overflow-y-auto"
+        ref={ref}
+      >
         {children}
       </div>
     </div>

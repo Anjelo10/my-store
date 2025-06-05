@@ -1,4 +1,4 @@
-const converIDR = (value: number) =>
+const converIDR = (value: number | any) =>
   new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",

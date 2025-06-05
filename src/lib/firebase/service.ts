@@ -55,13 +55,6 @@ export async function retrieveDataById(
     );
   }
 
-  console.log(
-    "📄 [retrieveDataById] collectionName:",
-    collectionName,
-    "id:",
-    id
-  );
-
   const snapshot = await getDoc(doc(firestore, collectionName, id));
   const data = snapshot.data();
   return data || null;
@@ -127,6 +120,20 @@ export async function updateData(
     });
 }
 
+export async function addData(
+  collectionName: string,
+  data: any,
+  callback: Function
+) {
+  await addDoc(collection(firestore, collectionName), data)
+    .then(() => {
+      callback(true);
+    })
+    .catch((error) => {
+      callback(false);
+    });
+}
+
 export async function deleteData(
   collectionName: string,
   id: string,
@@ -141,3 +148,17 @@ export async function deleteData(
       callback(false);
     });
 }
+
+// export async function uploadFile(
+//   id: string,
+//   file: any,
+//   newName: string,
+//   collection: string,
+//   callback: Function
+// ) {
+//   if (file) {
+//     if (file.size < 1048576) {
+//       const newName = ref(storage, `images/${collection}/${id}/${file.name}`);
+//     }
+//   }
+// }

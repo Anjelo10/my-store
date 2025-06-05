@@ -14,8 +14,10 @@ type Propstype = {
 const Select = (props: Propstype) => {
   const { label, name, defaultValue, disabled, options } = props;
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
+    <div className="py-2">
+      <label htmlFor={name} className="px-2 text-sm">
+        {label}
+      </label>
       <select
         name={name}
         id={name}

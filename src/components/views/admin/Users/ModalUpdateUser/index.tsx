@@ -45,59 +45,47 @@ const ModalUpdateUser = (props: Proptypes) => {
     }
   };
   return (
-    <div>
-      <Modal onClose={() => setUpdatedUser({})}>
-        <h1 className="text-2xl font-bold pt-2">Update Users</h1>
+    <Modal onClose={() => setUpdatedUser({})}>
+      <h1 className="text-2xl font-bold pt-2">Update Users</h1>
 
-        <form onSubmit={handleUpdateUser}>
-          <label className="flex flex-col py-2">
-            {<h1 className="text-sm mx-2">Email</h1>}
-            <input
-              type="text"
-              name="email"
-              defaultValue={updatedUser.email}
-              disabled
-              className="bg-gray-200 p-3 rounded-sm opacity-50"
-            />
-          </label>
-          <label className="flex flex-col py-2">
-            {<h1 className="text-sm mx-2">Email</h1>}
-            <input
-              type="text"
-              name="email"
-              defaultValue={updatedUser.fullname}
-              disabled
-              className="bg-gray-200 p-3 rounded-sm opacity-50 "
-            />
-          </label>
-          <label className="flex flex-col py-2">
-            {<h1 className="text-sm mx-2">Email</h1>}
-            <input
-              type="text"
-              name="email"
-              defaultValue={updatedUser.role}
-              disabled
-              className="bg-gray-200 p-3 rounded-sm opacity-50 "
-            />
-          </label>
-          <Select
-            label="Role"
-            name="role"
-            defaultValue={updatedUser.role}
-            options={[
-              { label: "Admin", value: "admin" },
-              { label: "Member", value: "member" },
-            ]}
+      <form onSubmit={handleUpdateUser}>
+        <label className="flex flex-col py-2">
+          {<h1 className="text-sm mx-2">Email</h1>}
+          <input
+            type="text"
+            name="email"
+            defaultValue={updatedUser.email}
+            disabled
+            className="bg-gray-200 p-3 rounded-sm opacity-50"
           />
-          <button
-            type="submit"
-            className="cursor-pointer flex my-3 items-center gap-2 hover:bg-yellow-600 transition bg-yellow-500 py-1 px-2 rounded-md"
-          >
-            {isLoading ? "Loading..." : "Update"}
-          </button>
-        </form>
-      </Modal>
-    </div>
+        </label>
+        <label className="flex flex-col py-2">
+          {<h1 className="text-sm mx-2">Fullname</h1>}
+          <input
+            type="text"
+            name="email"
+            defaultValue={updatedUser.fullname}
+            disabled
+            className="bg-gray-200 p-3 rounded-sm opacity-50 "
+          />
+        </label>
+        <Select
+          label="Role"
+          name="role"
+          defaultValue={updatedUser.role}
+          options={[
+            { label: "Admin", value: "admin" },
+            { label: "Member", value: "member" },
+          ]}
+        />
+        <button
+          type="submit"
+          className="cursor-pointer flex my-3 items-center gap-2 hover:bg-yellow-600 transition bg-yellow-500 py-1 px-2 rounded-md"
+        >
+          {isLoading ? "Loading..." : "Update"}
+        </button>
+      </form>
+    </Modal>
   );
 };
 

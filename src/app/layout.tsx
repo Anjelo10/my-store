@@ -6,6 +6,7 @@ import SessionProvider from "@/components/sessionprovider/SessionProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { ToasterProvider } from "@/components/common/ToasterWrapper";
+import Providers from "./Profiders";
 
 const popinsSans = Poppins({
   subsets: ["latin"],
@@ -27,9 +28,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={` ${popinsSans.className} antialiased`}>
-        <SessionProvider session={session}>
-          <ToasterProvider>{children}</ToasterProvider>
-        </SessionProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

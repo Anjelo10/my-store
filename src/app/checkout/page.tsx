@@ -1,16 +1,17 @@
 "use client";
 import { useToaster } from "@/components/common/ToasterWrapper";
 import Navbar from "@/components/fragments/Navbar/Navbar";
-import CartView from "@/components/views/Carts";
+import CheckoutView from "@/components/views/Checkout";
 
-const CartPage = () => {
+const ChekckOutPage = () => {
   const { showToast }: any = useToaster();
+
   return (
     <>
       <Navbar />
-      <CartView showToast={showToast} />
+      <CheckoutView showToast={showToast} />
     </>
   );
 };
 
-export default CartPage;
+export default ChekckOutPage;

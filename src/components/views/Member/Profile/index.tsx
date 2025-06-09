@@ -50,13 +50,18 @@ const ProfileMemberView = ({ showToast }: Propstype) => {
       <h1 className="text-xl font-semibold">Profile Page</h1>
       <div className="flex gap-6 mt-5">
         <div className="flex-col w-[350px] h-[350px] shadow-md flex items-center justify-center">
-          <Image
-            src={profile.image}
-            alt="Profile"
-            width={200}
-            height={100}
-            className="rounded-full"
-          />
+          {profile?.image ? (
+            <Image
+              src={profile.image}
+              alt="Profile"
+              width={200}
+              height={100}
+              className="rounded-full"
+            />
+          ) : (
+            <p>Loading profile image...</p>
+          )}
+
           <h1 className="text-xl font-bold mt-3 text-shadow-lg">
             {profile.fullname}
           </h1>

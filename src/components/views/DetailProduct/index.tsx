@@ -57,13 +57,17 @@ const DetailProductView = (props: Proptype) => {
     <div className="px-[15vw] py-[15vh]">
       <div className=" grid lg:grid-cols-2 gap-5">
         <div className=" w-full h-full border border-gray-300 rounded-sm shadow-md">
-          <Image
-            className="w-[100%] lg:h-[400px] object-cover"
-            src={product.image}
-            width={200}
-            height={200}
-            alt="image"
-          ></Image>
+          {product.image ? (
+            <Image
+              className="w-[100%] lg:h-[400px] object-cover"
+              src={product.image}
+              width={200}
+              height={200}
+              alt="image"
+            />
+          ) : (
+            <p className="text-center">Image Loading...</p>
+          )}
         </div>
         <div className=" w-full h-full lg:pl-5 ">
           <div className="px-5">
@@ -73,8 +77,7 @@ const DetailProductView = (props: Proptype) => {
               <span className="text-yellow-500">{product.category}</span>
             </h1>
             <p className="text-sm">{product?.description}</p>
-            <p className="text-sm lg:pt-[3rem]">Stok : {product.stock}</p>
-            <p className="text-2xl font-semibold text-yellow-500 ">
+            <p className="text-2xl font-semibold lg:pt-[3rem] text-yellow-500 ">
               {converIDR(product.price)}
             </p>
             <button

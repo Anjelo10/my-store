@@ -9,10 +9,10 @@ const HomePage = () => {
           <h1 className="text-shadow-lg text-8xl text-yellow-500 font-extrabold">
             KESYANG
           </h1>
-          <p className="text-shadow-lg  w-sm text-md">
+          <p className="text-shadow w-sm text-md">
             Ciptakan Kebahagiaan dengan cemilam enbal sejuta rasa
           </p>
-          <button className="text-white text-xl bg-yellow-500 px-2 rounded-sm mt-7 ">
+          <button className="text-white text-xl bg-yellow-500 px-2 rounded-sm mt-7 shadow-lg">
             Order Now
           </button>
         </div>

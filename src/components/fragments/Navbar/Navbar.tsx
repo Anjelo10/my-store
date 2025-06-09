@@ -49,14 +49,23 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="">
-            <Image
-              width={35}
-              height={35}
-              src={data?.user?.image}
-              alt={data?.user?.name}
-              className="rounded-2xl"
-              onClick={() => setDropDown(!dropDown)}
-            />
+            {data.user.image ? (
+              <Image
+                width={35}
+                height={35}
+                src={data?.user?.image}
+                alt={data?.user?.name}
+                className="rounded-2xl"
+                onClick={() => setDropDown(!dropDown)}
+              />
+            ) : (
+              <div
+                className="w-full h-full bg-black"
+                onClick={() => setDropDown(!dropDown)}
+              >
+                p
+              </div>
+            )}
             <div
               className={`absolute rounded-md right-0 shadow-md top-10 bg-white ${
                 dropDown ? "block" : "hidden"

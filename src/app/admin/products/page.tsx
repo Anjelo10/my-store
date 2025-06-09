@@ -1,6 +1,6 @@
 "use client";
 import { useToaster } from "@/components/common/ToasterWrapper";
-import ProductsAdminView from "@/components/views/admin/Products/page";
+import ProductsAdminView from "@/components/views/Admin/Products/page";
 import productServices from "@/services/product";
 import { useEffect, useState } from "react";
 

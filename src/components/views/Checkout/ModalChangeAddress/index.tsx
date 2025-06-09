@@ -30,7 +30,7 @@ const ModalChangeAddress = (props: Proptype) => {
     const form = e.target as HTMLFormElement;
     const data = {
       address: [
-        ...profile.address,
+        ...(profile.address ?? []),
         {
           recipient: form.recipient.value,
           phone: form.phone.value,
@@ -40,7 +40,6 @@ const ModalChangeAddress = (props: Proptype) => {
         },
       ],
     };
-
     try {
       const result = await userServices.updateProfile(data);
       if (result.status === 200) {

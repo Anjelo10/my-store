@@ -1,6 +1,7 @@
 "use client";
 import { useToaster } from "@/components/common/ToasterWrapper";
-import OrderUsersView from "@/components/views/Member/Order/index copy";
+import Navbar from "@/components/fragments/Navbar/Navbar";
+import MemberOrderView from "@/components/views/Member/Order";
 import userServices from "@/services/users";
 import { useEffect, useState } from "react";
 
@@ -16,7 +17,8 @@ const OrderUserPage = () => {
   }, []);
   return (
     <>
-      <OrderUsersView users={users} showToast={showToast} />
+      <Navbar />
+      <MemberOrderView users={users} showToast={showToast} />
     </>
   );
 };

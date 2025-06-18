@@ -7,7 +7,7 @@ export default async function heandler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    verify(req, res, true, async () => {
+    verify(req, res, false, async () => {
       const users = await retrieveData("users");
       const data = users.map((user: any) => {
         delete user.password;

@@ -10,12 +10,6 @@ import ModalChangeAddress from "./ModalChangeAddress";
 import Script from "next/script";
 import transactionServices from "@/services/transaction";
 
-declare global {
-  interface Window {
-    snap: any;
-  }
-}
-
 type Proptype = {
   showToast: (
     message: string,

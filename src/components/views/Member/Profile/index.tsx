@@ -102,7 +102,7 @@ const ProfileMemberView = ({ showToast }: Propstype) => {
               type="submit"
               className="cursor-pointer flex  items-center gap-2 hover:bg-yellow-600 transition bg-yellow-500 py-1 px-2 rounded-md"
             >
-              Update Profile
+              {loading ? "Loading..." : "Update Profile"}
             </button>
           </form>{" "}
         </div>

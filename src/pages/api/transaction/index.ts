@@ -93,15 +93,15 @@ export default async function handler(
             (transaction: any) => transaction.order_id === order_id
           );
           if (index !== -1) {
-            user.transaction[index].status = result.transaction_status;
           }
+          user.transaction[index].status = result.transaction_status;
           const data = { transaction: user.transaction };
           await updateData("users", decoded.id, data, (result: boolean) => {
             if (result) {
               res.status(200).json({
                 status: true,
                 statusCode: 200,
-                message: "Berhasil Mengambil Dat Put",
+                message: "Berhasil",
                 result: result,
                 data: data,
               });

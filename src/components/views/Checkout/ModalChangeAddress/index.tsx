@@ -61,7 +61,6 @@ const ModalChangeAddress = (props: Proptype) => {
   const handleDeleteAddress = async (id: number) => {
     const address = profile.address;
     address.splice(id, 1);
-    console.log(id);
     const data = {
       address,
     };

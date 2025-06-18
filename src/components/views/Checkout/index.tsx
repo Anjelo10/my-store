@@ -7,6 +7,14 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
 import ModalChangeAddress from "./ModalChangeAddress";
+import Script from "next/script";
+import transactionServices from "@/services/transaction";
+
+declare global {
+  interface Window {
+    snap: any;
+  }
+}
 
 type Proptype = {
   showToast: (
@@ -65,8 +73,29 @@ const CheckoutView = (props: Proptype) => {
     return total;
   };
 
+  const handleCheckout = async () => {
+    const payload = {
+      user: {
+        fullname: profile.fullname,
+        email: profile.email,
+        address: profile.address[selectedAddress],
+      },
+      transaction: {
+        total: getTotalPrice(),
+        items: profile.carts,
+      },
+    };
+    const { data } = await transactionServices.generateTransaction(payload);
+    window.snap.pay(data.token);
+  };
+
   return (
     <>
+      <Script
+        src={process.env.NEXT_PUBLIC_MIDTRANS_SNAP_URL}
+        data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}
+        strategy="lazyOnload"
+      />
       <div className="flex sm:px-[10vw] gap-15 md:px-[20vw] py-5">
         <div className="w-[70%]">
           <h1 className="text-2xl font-semibold">Checkout</h1>
@@ -157,7 +186,10 @@ const CheckoutView = (props: Proptype) => {
             <p>{converIDR(getTotalPrice())}</p>
           </div>
           <hr className="border-gray-300 mt-3 mb-3" />
-          <button className="w-full text-white  bg-yellow-500 py-1 rounded-sm hover:bg-yellow-600 cursor-pointer">
+          <button
+            onClick={() => handleCheckout()}
+            className="w-full text-white  bg-yellow-500 py-1 rounded-sm hover:bg-yellow-600 cursor-pointer"
+          >
             Buat Pesanan
           </button>
         </div>

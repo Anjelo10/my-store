@@ -15,6 +15,7 @@
     "boxicons": "^2.1.4",
     "firebase": "^11.4.0",
     "jsonwebtoken": "^9.0.2",
+    "midtrans-client": "^1.4.3",
     "next": "15.2.3",
     "next-auth": "^4.24.11",
     "postcss": "^8.5.3",

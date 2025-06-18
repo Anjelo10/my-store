@@ -1,6 +1,6 @@
 "use client";
 import { useToaster } from "@/components/common/ToasterWrapper";
-import AdminUsersView from "@/components/views/Admin/Users";
+import AdminUsersView from "@/components/views/AdminViews/Users";
 import userServices from "@/services/users";
 import { useEffect, useState } from "react";
 

@@ -1,4 +1,4 @@
-import DashboardAdminView from "@/components/views/Admin/Dashboard";
+import DashboardAdminView from "@/components/views/AdminViews/Dashboard";
 
 const AdminPage = () => {
   return (

@@ -71,6 +71,23 @@ const CartView = (props: Proptype) => {
     }
   };
 
+  const handleQtyChange = async (id: string, qty: number) => {
+    if (qty < 1) return;
+
+    const updatedCart: any = cart.map((item: any) =>
+      item.id === id ? { ...item, qty } : item
+    );
+
+    setCart(updatedCart);
+
+    try {
+      await userServices.addToCart({ carts: updatedCart });
+      showToast("Jumlah produk diperbarui", "success");
+    } catch (err) {
+      showToast("Gagal menyimpan perubahan", "danger");
+    }
+  };
+
   return (
     <div className="flex sm:px-[10vw] gap-15 md:px-[20vw] py-5">
       <div className="w-[70%]">
@@ -102,7 +119,9 @@ const CartView = (props: Proptype) => {
                         type="number"
                         className="opacity-50 text-center no-spinner w-[50px] bg-gray-200   text-sm rounded-lg  p-2.5 "
                         defaultValue={item.qty}
-                        disabled
+                        onChange={(e) =>
+                          handleQtyChange(item.id, Number(e.target.value))
+                        }
                       />
                     </label>
                     <button

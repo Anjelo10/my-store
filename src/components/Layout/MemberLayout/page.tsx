@@ -7,19 +7,14 @@ type Proptyps = {
 
 const listSidebarItem = [
   {
-    title: "Dashboard",
-    url: "/member",
-    icon: "bxs-dashboard",
-  },
-  {
-    title: "order",
-    url: "/member/order",
-    icon: "bxs-cart",
-  },
-  {
     title: "Profile",
     url: "/member/profile",
     icon: "bxs-user",
+  },
+  {
+    title: "Order",
+    url: "/member/order",
+    icon: "bxs-cart",
   },
 ];
 

@@ -55,7 +55,7 @@ const Navbar = () => {
                 height={35}
                 src={data?.user?.image}
                 alt={data?.user?.name}
-                className="rounded-2xl"
+                className="rounded-2xl cursor-pointer"
                 onClick={() => setDropDown(!dropDown)}
               />
             ) : (

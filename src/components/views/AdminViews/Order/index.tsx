@@ -1,17 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-import { User } from "@/type/users.type";
-import MemberLayout from "@/components/Layout/MemberLayout/page";
-import userServices from "@/services/users";
 import { converIDR } from "@/utils/currency";
 import Script from "next/script";
 import ModalDetailOrder from "./ModalDetailOrder";
 import productServices from "@/services/product";
+import AdminLayout from "@/components/Layout/AdminLayout/page";
+import transactionServices from "@/services/transaction";
 
-const MemberOrderView = () => {
-  const [profile, setProfile] = useState<User | any>({});
+const AdminOrdersView = () => {
   const [detailOrder, setDetailOrder] = useState({});
   const [products, setProducts] = useState([]);
+  const [transaction, setTransaction] = useState([]);
 
   const getAllProducts = async () => {
     const { data } = await productServices.getAllProducts();
@@ -21,12 +20,22 @@ const MemberOrderView = () => {
     getAllProducts();
   }, []);
 
-  const getAllUsers = async () => {
-    const { data } = await userServices.getUserProfile();
-    setProfile(data.data);
+  const getAllTransaction = async () => {
+    const { data } = await transactionServices.getAllTransaction();
+    let result = data.data;
+    result = result.filter((t: any) => t.status === "settlement");
+
+    // Urutkan dari yang terbaru ke lama, berdasarkan timestamp di order_id
+    result.sort((a: any, b: any) => {
+      const timeA = parseInt(a.order_id.split("-")[0]);
+      const timeB = parseInt(b.order_id.split("-")[0]);
+      return timeB - timeA;
+    });
+    setTransaction(result);
   };
+
   useEffect(() => {
-    getAllUsers();
+    getAllTransaction();
   }, []);
 
   return (
@@ -36,45 +45,49 @@ const MemberOrderView = () => {
         data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}
         strategy="lazyOnload"
       />
-      <MemberLayout>
+      <AdminLayout>
         <div className="px-12 py-7">
-          <h1 className="m-3 text-2xl font-bold">Riwayat Order</h1>
+          <h1 className="m-3 text-2xl font-bold">Order Management</h1>
           <div className="border border-gray-300 rounded-sm shadow-md">
             <table className="table-custom w-full ">
               <thead className="bg-gray-200">
                 <tr>
                   <th>#</th>
                   <th>Order ID</th>
+                  <th>Username</th>
                   <th>Total</th>
                   <th>Status</th>
+                  <th>Tanggal</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                {profile?.transaction?.map(
-                  (transaction: any, index: number) => (
+                {transaction?.map((transaction: any, index: number) => {
+                  const orderTimestamp = parseInt(
+                    transaction.order_id.split("-")[0]
+                  );
+                  const orderDate = new Date(orderTimestamp).toLocaleString(
+                    "id-ID",
+                    {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    }
+                  );
+                  return (
                     <tr
                       key={transaction.order_id}
                       className={index % 2 === 0 ? "bg-gray-100" : ""}
                     >
                       <td>{index + 1}</td>
                       <td>{transaction.order_id}</td>
+                      <td>{transaction.user.fullname}</td>
                       <td>{converIDR(transaction.total)}</td>
                       <td>
-                        <span
-                          className={`px-2 py-1 rounded-lg text-sm font-semibold
-                            ${
-                              transaction.status === "settlement"
-                                ? "text-green-600 bg-green-200"
-                                : transaction.status === "pending"
-                                ? "bg-yellow-200 text-yellow-500"
-                                : "bg-gray-400"
-                            }
-                          `}
-                        >
+                        <span className="bg-green-200 text-green-600 px-2 rounded">
                           {transaction.status}
                         </span>
                       </td>
+                      <td>{orderDate}</td>
                       <td>
                         <div className="flex gap-2">
                           <button
@@ -86,30 +99,16 @@ const MemberOrderView = () => {
                           >
                             <i className="bx  bx-dots-vertical-rounded text-2xl" />
                           </button>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              window.snap.pay(transaction.token);
-                            }}
-                            className={` bg-green-600 text-white px-2 rounded-sm p-2 flex items-center justify-center ${
-                              transaction.status !== "pending"
-                                ? "opacity-50 cursor-default"
-                                : "cursor-pointer"
-                            }`}
-                            disabled={transaction.status !== "pending"}
-                          >
-                            <i className="bx  bx-money text-2xl " />
-                          </button>
                         </div>
                       </td>
                     </tr>
-                  )
-                )}
+                  );
+                })}
               </tbody>
             </table>
           </div>
         </div>
-      </MemberLayout>
+      </AdminLayout>
       {Object.keys(detailOrder).length > 0 && (
         <ModalDetailOrder
           setDetailOrder={setDetailOrder}
@@ -121,4 +120,4 @@ const MemberOrderView = () => {
   );
 };
 
-export default MemberOrderView;
+export default AdminOrdersView;

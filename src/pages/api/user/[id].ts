@@ -1,6 +1,5 @@
-import { deleteData, retrieveData, updateData } from "@/lib/firebase/service";
+import { deleteData, updateData } from "@/lib/firebase/service";
 import type { NextApiRequest, NextApiResponse } from "next";
-import jwt from "jsonwebtoken";
 import { verify } from "@/utils/verifyToken";
 
 export default async function heandler(

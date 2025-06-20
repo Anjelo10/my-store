@@ -1,7 +1,7 @@
 import logo from "./Logo.png";
-import kesyang_1 from "./kesyang-1.jpg";
+import logo_1 from "./logo-putih.png";
 
 export const assets = {
   logo,
-  kesyang_1,
+  logo_1,
 };

@@ -5,22 +5,22 @@ import Link from "next/link";
 type Proptype = {
   product: Products[];
 };
-const ProductView = (props: Proptype) => {
-  const { product } = props;
 
+const ProductView = ({ product }: Proptype) => {
   return (
-    <div className="">
-      <div className=" md:px-16 lg:px-32 py-5">
-        <h1 className="text-3xl font-bold my-2">Product Page</h1>
-        <p className="lg:w-[60%] sm:w-full">
-          Kesyang adalah cemilan tradisional yang diolah dar singkong pilihan,
-          menghadirkan rasa autentik nusantara dengan sentuhan kekinian
+    <div className="px-4 sm:px-6 md:px-16 lg:px-5 my-[90px]  max-w-screen-xl mx-auto ">
+      <div className="mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-2">Product Page</h1>
+        <p className="text-sm sm:text-base lg:w-3/4">
+          Kesyang adalah cemilan tradisional yang diolah dari singkong pilihan,
+          menghadirkan rasa autentik nusantara dengan sentuhan kekinian.
         </p>
       </div>
-      <div className="grid lg:grid-cols-4 gap-5 sm:grid-cols-2 sm:px-6 md:px-16 lg:px-32 py-5 md:text-lg">
-        {product.map((product) => (
-          <Link href={`/products/${product.id}`} key={product.id}>
-            <CardProduct product={product} />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {product.map((item) => (
+          <Link href={`/products/${item.id}`} key={item.id}>
+            <CardProduct product={item} />
           </Link>
         ))}
       </div>

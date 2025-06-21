@@ -90,9 +90,9 @@ const CheckoutView = (props: Proptype) => {
         data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}
         strategy="lazyOnload"
       />
-      <div className="flex sm:px-[10vw] gap-15 md:px-[20vw] py-5">
-        <div className="w-[70%]">
-          <h1 className="text-2xl font-semibold">Checkout</h1>
+      <div className="flex flex-col sm:flex-row sm:px-[10vw] gap-15 md:px-[20vw] py-[90px]">
+        <div className="w-full sm:w-[70%]">
+          <h1 className="text-2xl font-semibold mx-5">Checkout</h1>
           <div className="mt-3 w-full border border-gray-300 p-5 rounded-sm ">
             <h1 className="text-md font-semibold mb-2">Alamat Pengiriman</h1>
             {profile?.address?.length > 0 ? (
@@ -160,7 +160,7 @@ const CheckoutView = (props: Proptype) => {
             </div>
           )}
         </div>
-        <div className="w-[30%] ">
+        <div className="sm:w-[30%] mx-8">
           <h1 className="text-2xl font-semibold mb-2">Summary</h1>
           <div className="flex justify-between text-center mb-2">
             <h1 className="font-semibold text-sm">Subtotal</h1>

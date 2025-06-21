@@ -37,6 +37,22 @@ const AdminOrdersView = () => {
   useEffect(() => {
     getAllTransaction();
   }, []);
+  const handleUpdateShippingStatus = async (
+    userId: string,
+    orderId: string,
+    shippingStatus: string
+  ) => {
+    try {
+      const res = await transactionServices.updateShippingStatus(
+        userId,
+        orderId,
+        shippingStatus
+      );
+      if (res.status === 200) {
+        getAllTransaction(); // refresh list
+      }
+    } catch (err) {}
+  };
 
   return (
     <>
@@ -58,6 +74,7 @@ const AdminOrdersView = () => {
                   <th>Total</th>
                   <th>Status</th>
                   <th>Tanggal</th>
+                  <th>Pengiriman</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -88,6 +105,21 @@ const AdminOrdersView = () => {
                         </span>
                       </td>
                       <td>{orderDate}</td>
+                      <td>
+                        <select
+                          value={transaction.shippingStatus}
+                          onChange={(e) =>
+                            handleUpdateShippingStatus(
+                              transaction.user.id,
+                              transaction.order_id,
+                              e.target.value
+                            )
+                          }
+                        >
+                          <option value="proses_packing">Proses Packing</option>
+                          <option value="paket_dikirim">Paket Dikirim</option>
+                        </select>
+                      </td>
                       <td>
                         <div className="flex gap-2">
                           <button

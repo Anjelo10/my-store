@@ -23,3 +23,13 @@
     text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
   }
 }
+
+.bg-hero {
+  background-image: url("../components/asset/hero.jpg");
+  background-size: cover;
+}
+
+.bg-contact {
+  background-image: url("../components/asset/contact_img.png");
+  background-size: cover;
+}

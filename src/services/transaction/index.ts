@@ -17,6 +17,16 @@ const transactionServices = {
         timeout: 10000,
       }
     ),
+  updateShippingStatus: (
+    userId: string,
+    orderId: string,
+    shippingStatus: string
+  ) =>
+    instance.patch(`${endpoint.transaction}/admin`, {
+      userId,
+      orderId,
+      shippingStatus,
+    }),
 };
 
 export default transactionServices;

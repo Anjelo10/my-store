@@ -2,9 +2,10 @@
 import MemberLayout from "@/components/Layout/MemberLayout/page";
 import userServices from "@/services/users";
 import { User } from "@/type/users.type";
-
 import Image from "next/image";
 import { FormEvent, useEffect, useState } from "react";
+import useMediaQuery from "@/utils/useMediaQuery";
+import Link from "next/link";
 
 type Propstype = {
   showToast: (
@@ -16,6 +17,7 @@ type Propstype = {
 const ProfileMemberView = ({ showToast }: Propstype) => {
   const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState<User | any>({});
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const getAllUsers = async () => {
     const { data } = await userServices.getUserProfile();
@@ -45,11 +47,62 @@ const ProfileMemberView = ({ showToast }: Propstype) => {
       showToast("Profile gagal diubah", "danger");
     }
   };
-  return (
-    <MemberLayout>
-      <h1 className="text-xl font-semibold">Profile Page</h1>
-      <div className="flex gap-6 mt-5">
-        <div className="flex-col w-[350px] h-[350px] shadow-md flex items-center justify-center">
+
+  const isDesktop = useMediaQuery("(min-width: 640px)");
+
+  const content = (
+    <>
+      <div>
+        {/* Hamburger Menu: hanya muncul di sm */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="sm:hidden text-2xl ml-2"
+        >
+          <i className="bx bx-menu text-3xl mt-4 mx-2" />
+        </button>
+
+        {/* Slide Menu */}
+        <div
+          className={`fixed top-0 left-0 h-full w-60 bg-white shadow-md z-50 transform transition-transform duration-300 ease-in-out ${
+            menuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <div className="flex justify-between items-center px-4 py-3 border-b">
+            <h2 className="text-lg font-bold">Menu</h2>
+            <button onClick={() => setMenuOpen(false)} className="text-2xl">
+              <i className="bx bx-x" />
+            </button>
+          </div>
+          <div className="flex flex-col mt-4">
+            <Link
+              href="/member"
+              className="px-4 py-3 hover:bg-yellow-500 text-sm"
+              onClick={() => setMenuOpen(false)}
+            >
+              Profile
+            </Link>
+            <Link
+              href="/member/order"
+              className="px-4 py-3 hover:bg-yellow-500 text-sm"
+              onClick={() => setMenuOpen(false)}
+            >
+              Order
+            </Link>
+            <Link
+              href="/"
+              className="px-4 py-3 hover:bg-yellow-500 text-sm"
+              onClick={() => setMenuOpen(false)}
+            >
+              Home
+            </Link>
+          </div>
+        </div>
+      </div>
+      <h1 className="text-2xl sm:text-left text-center sm:text-xl font-semibold m-5 ">
+        Profile Page
+      </h1>
+      <div className="flex flex-col sm:flex-row gap-6 mt-5">
+        <div className="w-full flex-col sm:w-[350px] smh-[350px] sm:shadow-md flex items-center justify-center">
           {profile?.image ? (
             <Image
               src={profile.image}
@@ -66,7 +119,7 @@ const ProfileMemberView = ({ showToast }: Propstype) => {
             {profile.fullname}
           </h1>
         </div>
-        <div className="w-[75%] h-[350px] shadow-md">
+        <div className="w-full sm:w-[75%] h-[350px] shadow-md">
           <form onSubmit={handleChangeProfile} className="flex flex-col  m-4">
             <label className="ml-2 text-sm ">Fullname</label>
             <input
@@ -107,8 +160,9 @@ const ProfileMemberView = ({ showToast }: Propstype) => {
           </form>{" "}
         </div>
       </div>
-    </MemberLayout>
+    </>
   );
+  return isDesktop ? <MemberLayout>{content}</MemberLayout> : content;
 };
 
 export default ProfileMemberView;

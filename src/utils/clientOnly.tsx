@@ -1,17 +1,22 @@
-"use client";
-import { useEffect, useState } from "react";
+// components/NoSSRWrapper.tsx
+import { useEffect, useState, ReactNode } from "react";
 
-export default function ClientOnly({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [mounted, setMounted] = useState(false);
+interface NoSSRWrapperProps {
+  children: ReactNode;
+}
+
+const NoSSRWrapper = ({ children }: NoSSRWrapperProps) => {
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    setIsClient(true);
   }, []);
 
-  if (!mounted) return null; // atau Skeleton Loader
+  if (!isClient) {
+    return <div>Loading...</div>; // Atau skeleton yang sama
+  }
+
   return <>{children}</>;
-}
+};
+
+export default NoSSRWrapper;

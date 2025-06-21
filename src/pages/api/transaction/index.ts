@@ -39,13 +39,14 @@ export default async function handler(
           first_name: payload.user.fullname,
           email: payload.user.email,
           phone: payload.user.address.phone,
-          shippinh_address: {
+          shipping_address: {
             first_name: payload.user.address.recipient,
             email: payload.user.email,
             phone: payload.user.address.phone,
             address: payload.user.address.address,
           },
           item_details: payload.transaction.items,
+          shippingStatus: payload.transaction.shippingStatus,
         },
       };
       createTransaction(
@@ -58,6 +59,7 @@ export default async function handler(
             redirect_url: transaction.redirect_url,
             status: "pending",
             order_id: genereateOrderId,
+            shippingStatus: "sedang_dikemas",
           };
           const data = {
             transaction: arrayUnion(newTransaction),

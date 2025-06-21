@@ -10,6 +10,7 @@ import {
   serverTimestamp,
   updateDoc,
   deleteDoc,
+  limit,
 } from "firebase/firestore";
 import app from "./init";
 import bcrypt from "bcrypt";
@@ -149,16 +150,22 @@ export async function deleteData(
     });
 }
 
-// export async function uploadFile(
-//   id: string,
-//   file: any,
-//   newName: string,
-//   collection: string,
-//   callback: Function
-// ) {
-//   if (file) {
-//     if (file.size < 1048576) {
-//       const newName = ref(storage, `images/${collection}/${id}/${file.name}`);
-//     }
-//   }
-// }
+export async function getLimitedProducts(
+  collectionName: string,
+  limitCount: number
+): Promise<FirestoreDocument[]> {
+  if (!collectionName || !limitCount) {
+    throw new Error(
+      "Parameter tidak valid: collectionName atau limitCount tidak boleh kosong"
+    );
+  }
+
+  const q = query(collection(firestore, collectionName), limit(limitCount));
+  const snapshot = await getDocs(q);
+  const data = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return data;
+}

@@ -89,17 +89,18 @@ const CartView = (props: Proptype) => {
   };
 
   return (
-    <div className="flex sm:px-[10vw] gap-15 md:px-[20vw] py-5">
-      <div className="w-[70%]">
+    <div className="flex flex-col lg:flex-row gap-10 px-4 sm:px-[10vw] md:px-[20vw] py-[90px] ">
+      {/* Cart Section */}
+      <div className="w-full sm:w-[70%]">
         <h1 className="text-2xl font-semibold">Carts</h1>
         {cart.length > 0 ? (
-          <div className="w-full">
+          <div className="w-full mt-5">
             {cart.map((item: { id: string; qty: number }) => (
               <Fragment key={item.id}>
-                <div className="flex gap-5 m-5 w-full">
+                <div className="flex sm:flex-row gap-5 my-5 w-full">
                   {getProduct(item.id)?.image && (
                     <Image
-                      className="w-[150px] h-[150px] object-cover"
+                      className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] object-cover"
                       src={`${getProduct(item.id)?.image}`}
                       width={150}
                       height={150}
@@ -107,37 +108,42 @@ const CartView = (props: Proptype) => {
                     />
                   )}
                   <div className="w-full">
-                    <h2 className="font-semibold text-xl">
-                      {getProduct(item.id)?.name}
-                    </h2>
-                    <p className="text-sm capitalize">
-                      {getProduct(item.id)?.category}
-                    </p>
-                    <label className="flex gap-2 mt-5 mb-2 items-center text-sm font-semibold">
-                      Kuantitas
-                      <input
-                        type="number"
-                        className="opacity-50 text-center no-spinner w-[50px] bg-gray-200   text-sm rounded-lg  p-2.5 "
-                        defaultValue={item.qty}
-                        onChange={(e) =>
-                          handleQtyChange(item.id, Number(e.target.value))
-                        }
-                      />
-                    </label>
-                    <button
-                      name="delete"
-                      type="button"
-                      className="cursor-pointer  text-gray-600 px-2 rounded-sm "
-                      onClick={() => handleDeleteCart(item.id)}
-                    >
-                      <i className="bx  bxs-trash text-[20px]"></i>
-                    </button>
-                  </div>
-                  <div className="text-md font-semibold pr-4">
-                    {converIDR(getProduct(item.id)?.price)}
+                    <div>
+                      <h2 className="font-semibold sm:text-xl">
+                        {getProduct(item.id)?.name}
+                      </h2>
+                      <p className="text-sm capitalize">
+                        {getProduct(item.id)?.category}
+                      </p>
+                      <label className="flex gap-2 sm:mt-5 mb-2 items-center text-sm font-semibold">
+                        Kuantitas
+                        <input
+                          type="number"
+                          className=" text-center no-spinner w-[50px] bg-gray-200 text-sm rounded-lg sm:p-2.5"
+                          defaultValue={item.qty}
+                          onChange={(e) =>
+                            handleQtyChange(item.id, Number(e.target.value))
+                          }
+                        />
+                      </label>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <button
+                        name="delete"
+                        type="button"
+                        className="text-gray-600 px-2 rounded-sm"
+                        onClick={() => handleDeleteCart(item.id)}
+                      >
+                        <i className="bx bxs-trash text-[20px]"></i>
+                      </button>
+                      <div className="sm:text-md font-semibold  pr-0 sm:pr-5 ">
+                        {converIDR(getProduct(item.id)?.price)}
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <hr className="border-gray-300" />
+                <hr className=" border-gray-300 " />
               </Fragment>
             ))}
           </div>
@@ -147,7 +153,9 @@ const CartView = (props: Proptype) => {
           </div>
         )}
       </div>
-      <div className="w-[30%] ">
+
+      {/* Summary Section */}
+      <div className="w-full lg:w-[30%]">
         <h1 className="text-2xl font-semibold mb-2">Summary</h1>
         <div className="flex justify-between text-center mb-2">
           <h1 className="font-semibold text-sm">Subtotal</h1>
@@ -168,7 +176,7 @@ const CartView = (props: Proptype) => {
         </div>
         <hr className="border-gray-300 mt-3 mb-3" />
         <Link href="/checkout">
-          <button className="w-full text-white  bg-yellow-500 py-1 rounded-sm cursor-pointer hover:bg-yellow-600">
+          <button className="w-full text-white bg-yellow-500 py-2 rounded-sm cursor-pointer hover:bg-yellow-600">
             Checkout
           </button>
         </Link>

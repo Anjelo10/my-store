@@ -23,7 +23,7 @@ const MemberLayout = (props: Proptyps) => {
   return (
     <div className="flex">
       <Sidebar lists={listSidebarItem} />
-      <div className="w-full p-14">{children}</div>
+      <div className="w-full p-14 pl-[40vh]">{children}</div>
     </div>
   );
 };

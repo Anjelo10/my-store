@@ -63,7 +63,7 @@ const AdminOrdersView = () => {
       />
       <AdminLayout>
         <div className="px-12 py-7">
-          <h1 className="m-3 text-2xl font-bold">Order Management</h1>
+          <h1 className="m-3 text-2xl font-bold">Management Order</h1>
           <div className="border border-gray-300 rounded-sm shadow-md">
             <table className="table-custom w-full ">
               <thead className="bg-gray-200">

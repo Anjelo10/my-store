@@ -20,7 +20,7 @@ const Sidebar = (props: Proptypes) => {
   const isAdmin = session?.user?.role === "admin";
 
   return (
-    <div className="bg-yellow-500 text-white p-20px h-screen w-[250px] flex flex-col justify-between px-5">
+    <div className="fixed bg-yellow-500 text-white p-20px h-screen w-[250px] flex flex-col justify-between px-5">
       <div>
         <Link href="/">
           <Image

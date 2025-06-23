@@ -22,7 +22,7 @@ const listSidebarItem = [
     icon: "bxs-group",
   },
   {
-    title: "Order",
+    title: "Orders",
     url: "/admin/orders",
     icon: "bxs-cart",
   },
@@ -33,7 +33,7 @@ const AdminLayout = (props: Proptyps) => {
   return (
     <div className="flex ">
       <Sidebar lists={listSidebarItem} />
-      <div className="w-full p-8">{children}</div>
+      <div className="w-full p-8 pl-[40vh]">{children}</div>
     </div>
   );
 };

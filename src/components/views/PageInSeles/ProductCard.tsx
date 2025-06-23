@@ -7,7 +7,7 @@ const ProductCard = async () => {
   const product = await getLimitedProducts("product", 4);
 
   return (
-    <section
+    <div
       className="flex flex-col items-center pt-14 mb-14 px-6 md:px-16 lg:px-32 "
       id="product"
     >
@@ -50,7 +50,7 @@ const ProductCard = async () => {
           See more
         </button>
       </Link>
-    </section>
+    </div>
   );
 };
 

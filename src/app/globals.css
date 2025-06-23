@@ -33,3 +33,8 @@
   background-image: url("../components/asset/contact_img.png");
   background-size: cover;
 }
+
+.bg-login {
+  background-image: url("../components/asset/login-image.jpg");
+  background-size: contain;
+}

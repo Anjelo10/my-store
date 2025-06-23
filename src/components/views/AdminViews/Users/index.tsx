@@ -28,7 +28,7 @@ const AdminUsersView = (props: Proptypes) => {
     <>
       <AdminLayout>
         <div className="px-12 py-7">
-          <h1 className="m-3 text-2xl font-bold">Admin Users </h1>
+          <h1 className="m-3 text-2xl font-bold">Management Users</h1>
           <div className="border border-gray-300 rounded-sm shadow-md">
             <table className="table-custom w-full ">
               <thead className="bg-gray-200">

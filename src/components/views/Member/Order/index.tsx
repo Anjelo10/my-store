@@ -37,7 +37,6 @@ const MemberOrderView = () => {
   const content = (
     <>
       <div>
-        {/* Hamburger Menu: hanya muncul di sm */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="sm:hidden text-2xl ml-2"
@@ -45,7 +44,6 @@ const MemberOrderView = () => {
           <i className="bx bx-menu text-3xl mt-4 mx-2" />
         </button>
 
-        {/* Slide Menu */}
         <div
           className={`fixed top-0 left-0 h-full w-60 bg-white shadow-md z-50 transform transition-transform duration-300 ease-in-out ${
             menuOpen ? "translate-x-0" : "-translate-x-full"

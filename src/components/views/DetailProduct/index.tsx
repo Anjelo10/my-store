@@ -54,7 +54,7 @@ const DetailProductView = (props: Proptype) => {
     }
   };
   return (
-    <div className="px-[5vw] sm:px-[15vw] py-[5vh] sm:py-[15vh] lg:my-[10vh]">
+    <div className="px-[5vw] sm:px-[15vw] py-[15vh] sm:py-[15vh] lg:my-[10vh]">
       <div className=" grid lg:grid-cols-2 gap-5">
         <div className=" w-full h-full border border-gray-300 rounded-sm shadow-md">
           {product.image ? (

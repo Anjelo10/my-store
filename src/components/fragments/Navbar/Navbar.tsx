@@ -8,8 +8,8 @@ import { usePathname, useRouter } from "next/navigation";
 
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "Produk", href: "/products" },
-  { label: "Kotak", href: "/#contact" },
+  { label: "Product", href: "/products" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 const Navbar = () => {

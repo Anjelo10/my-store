@@ -4,10 +4,10 @@ const ContactPage = () => {
   return (
     <div id="contact">
       <div className="w-full h-[400px] bg-contact flex justify-center items-center flex-col">
-        <h1 className="text-white text-6xl font-bold text-center w-full mb-3 ">
+        <h1 className="text-white text-4xl sm:text-6xl font-bold text-center w-full mb-3 ">
           Kotak Kami
         </h1>
-        <p className="text-white text-sm w-[80vh] text-justify ">
+        <p className="text-white text-xs sm:text-sm sm:w-[80vh]  w-[40vh] text-justify ">
           Untuk pertanyaan terkait layanan, dukungan teknis, atau kolaborasi,
           silakan hubungi kami melalui Kontak yang tersedia. Kami berkomitmen
           untuk memberikan respons yang cepat dan informatif
@@ -15,16 +15,16 @@ const ContactPage = () => {
       </div>
       <div>
         <div className="flex items-center flex-col">
-          <h1 className="text-4xl font-bold text-center w-full mb-3 mt-10 ">
+          <h1 className="sm:text-4xl text-2xl font-bold text-center w-full mb-3 mt-10 ">
             <span className="text-yellow-500">Hubungi</span> & bergabung bersama
             kami
           </h1>
-          <p className="text-center text-xs w-[80vh] mb-10">
+          <p className="text-center text-xs sm:w-[80vh] w-[50vh] mb-10">
             Punya ide menarik atau butuh informasi lebih lanjut? Mari kita
             bicara! Tim kami siap mendengarkan dan membantu Anda.
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-10 px-[60vh] mb-10 ">
+        <div className="grid grid-cols-1 sm:grid-cols-3 px-5 gap-6 sm:px-2 lg:px-[60vh] mb-10 ">
           <div className="bg-yellow-500 rounded-md">
             <div className="p-5 items-center flex py-7 flex-col">
               <i className="bx  bx-phone text-4xl text-white pb-5" />

@@ -87,7 +87,7 @@ const MemberOrderView = () => {
         strategy="lazyOnload"
       />
 
-      <div className="px-12 py-7">
+      <div className=" py-7">
         <h1 className="mb-5 text-center sm:text-left text-2xl font-bold">
           Riwayat Order
         </h1>

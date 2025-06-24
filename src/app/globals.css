@@ -27,14 +27,21 @@
 .bg-hero {
   background-image: url("../components/asset/hero.jpg");
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .bg-contact {
   background-image: url("../components/asset/contact_img.png");
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .bg-login {
   background-image: url("../components/asset/login-image.jpg");
   background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.bg-color {
+  background-color: #de9b28;
 }

@@ -11,10 +11,10 @@ const ProductCard = async () => {
       className="flex flex-col items-center pt-14 mb-14 px-6 md:px-16 lg:px-32 "
       id="product"
     >
-      <h1 className="text-4xl font-bold text-center w-full mb-7 ">
+      <h1 className="text-4xl font-bold text-center w-full mb-7 text-shadow">
         Produk <span className="text-yellow-500">Kita</span>
       </h1>
-      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-6">
         {product?.map((products: any) => (
           <Link href={`/products/${products.id}`} key={products.id}>
             <div>

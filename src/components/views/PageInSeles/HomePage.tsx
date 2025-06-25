@@ -11,7 +11,7 @@ const HomePage = () => {
             KESYANG
           </h1>
           <p className="text-shadow sm:w-md text-md sm:text-lg">
-            Ciptakan Kebahagiaan dengan cemilam enbal sejuta rasa
+            Ciptakan Kebahagiaan dengan cemilan enbal sejuta rasa
           </p>
           <Link href="#product">
             <button className="text-white text-xl bg-yellow-500 px-2 rounded-sm mt-7 shadow-lg cursor-pointer">

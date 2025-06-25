@@ -11,6 +11,7 @@ import {
   updateDoc,
   deleteDoc,
   limit,
+  orderBy,
 } from "firebase/firestore";
 import app from "./init";
 import bcrypt from "bcrypt";
@@ -132,6 +133,7 @@ export async function addData(
     })
     .catch((error) => {
       callback(false);
+      console.log(error);
     });
 }
 
@@ -160,7 +162,11 @@ export async function getLimitedProducts(
     );
   }
 
-  const q = query(collection(firestore, collectionName), limit(limitCount));
+  const q = query(
+    collection(firestore, collectionName),
+    orderBy("createdAt", "desc"),
+    limit(limitCount)
+  );
   const snapshot = await getDocs(q);
   const data = snapshot.docs.map((doc) => ({
     id: doc.id,

@@ -17,6 +17,7 @@ const ModalDetailOrder = (props: Proptype) => {
     const product = products.find((product) => product.id === id);
     return product;
   };
+  console.log(detailOrder.items);
   return (
     <Modal onClose={() => setDetailOrder({})}>
       <h1 className="text-2xl font-bold mb-3 ">Detail Order</h1>
@@ -30,7 +31,7 @@ const ModalDetailOrder = (props: Proptype) => {
         </div>
         <div className="flex flex-col">
           <h1 className="text-md font-semibold ">Total </h1>
-          <p className="text-sm">{converIDR(detailOrder.total)}</p>
+          <p className="text-sm">{converIDR(detailOrder.Total)}</p>
         </div>
         <div className="flex flex-col">
           <h1 className="text-md font-semibold ">Status </h1>
@@ -82,7 +83,7 @@ const ModalDetailOrder = (props: Proptype) => {
                 </label>
               </div>
               <div className="text-md font-semibold pr-4">
-                {converIDR(getProduct(item.id)?.price)}
+                {converIDR((getProduct(item.id)?.price || 0) * item.qty)}
               </div>
             </div>
             <hr className="border-gray-300 " />

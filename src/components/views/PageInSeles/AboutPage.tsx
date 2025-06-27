@@ -4,7 +4,10 @@ import Link from "next/link";
 
 const AboutPage = () => {
   return (
-    <div className="grid lg:grid-cols-2 items-center justify-center h-screen w-full sm:p-0">
+    <div
+      className="grid lg:grid-cols-2 items-center justify-center h-screen w-full sm:p-0"
+      id="about"
+    >
       <div className="hidden lg:flex flex-col items-center justify-center h-full">
         <div className="bg-color w-full h-full  bg-login"></div>
       </div>

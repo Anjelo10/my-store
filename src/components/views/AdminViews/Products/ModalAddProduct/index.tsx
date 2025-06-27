@@ -97,10 +97,10 @@ const ModalAddProduct = (props: Proptypes) => {
         <label className="flex flex-col py-2">
           {<h1 className="text-sm mx-2">Stok</h1>}
           <input
-            type="text"
+            type="number"
             name="stock"
             placeholder="Masukan Stok Produk"
-            className="bg-gray-200 p-3 rounded-sm "
+            className="bg-gray-200 p-3 rounded-sm no-spinner"
           />
         </label>
         <label className="flex flex-col py-2">

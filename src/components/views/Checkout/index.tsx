@@ -68,6 +68,14 @@ const CheckoutView = (props: Proptype) => {
   };
 
   const handleCheckout = async () => {
+    if (!profile.address || profile.address.length === 0) {
+      showToast("Silahkan tambahkan alamat", "warning");
+      return;
+    }
+    if (!profile.carts || profile.carts.length === 0) {
+      showToast("Silahkan tambahkan produk", "warning");
+      return;
+    }
     const payload = {
       user: {
         fullname: profile.fullname,
@@ -116,7 +124,7 @@ const CheckoutView = (props: Proptype) => {
               </div>
             ) : (
               <button
-                className="text-white  bg-yellow-500 py-1 rounded-sm hover:bg-yellow-600 cursor-pointer"
+                className="text-white  bg-yellow-500 py-1 px-2 rounded-sm hover:bg-yellow-600 cursor-pointer"
                 onClick={() => setChangeAddress(true)}
                 type="button"
               >

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const AdminUsersPage = () => {
   const [users, setUsers] = useState([]);
   const { showToast }: any = useToaster();
+
   useEffect(() => {
     const getAllUsers = async () => {
       const { data } = await userServices.getAllUsers();

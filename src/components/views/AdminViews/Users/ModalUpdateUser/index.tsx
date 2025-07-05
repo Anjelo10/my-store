@@ -41,7 +41,6 @@ const ModalUpdateUser = (props: Proptypes) => {
   return (
     <Modal onClose={() => setUpdatedUser({})}>
       <h1 className="text-2xl font-bold pt-2">Update Users</h1>
-
       <form onSubmit={handleUpdateUser}>
         <label className="flex flex-col py-2">
           {<h1 className="text-sm mx-2">Email</h1>}

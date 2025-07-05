@@ -29,7 +29,7 @@ const ProductsAdminView = (props: Proptypes) => {
     <>
       <AdminLayout>
         <div className="px-12 py-7">
-          <h1 className=" my-3 text-2xl font-bold">Product Management</h1>
+          <h1 className=" my-3 text-2xl font-bold">Manejemen Produk</h1>
           <button
             onClick={() => setModalAddProduct(true)}
             className="font-semibold cursor-pointer text-sm flex items-center mb-3 gap-2 hover:bg-yellow-600 transition bg-yellow-500 py-1 px-1 rounded-md"

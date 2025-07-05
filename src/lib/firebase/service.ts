@@ -12,6 +12,8 @@ import {
   deleteDoc,
   limit,
   orderBy,
+  getCountFromServer,
+  getDocsFromServer,
 } from "firebase/firestore";
 import app from "./init";
 import bcrypt from "bcrypt";
@@ -167,11 +169,48 @@ export async function getLimitedProducts(
     orderBy("createdAt", "desc"),
     limit(limitCount)
   );
-  const snapshot = await getDocs(q);
+  const snapshot = await getDocsFromServer(q);
   const data = snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
 
   return data;
+}
+
+export async function getUserCountUsers(): Promise<number> {
+  const userColection = collection(firestore, "users");
+  const snapshot = await getCountFromServer(userColection);
+  return snapshot.data().count;
+}
+export async function getUserCountProducts(): Promise<number> {
+  const userColection = collection(firestore, "product");
+  const snapshot = await getCountFromServer(userColection);
+  return snapshot.data().count;
+}
+
+export async function getTotalTransaction(): Promise<number> {
+  const transactionRef = collection(firestore, "users");
+  const snapshot = await getDocs(transactionRef);
+
+  let totalSemuaUser = 0;
+  snapshot.forEach((doc) => {
+    const userData = doc.data();
+    console.log(doc.data());
+    const items = userData?.transaction;
+    console.log(items);
+    if (Array.isArray(items)) {
+      const totalUser = items.reduce((sum, tx) => {
+        if (typeof tx.total === "number" && tx.status === "settlement") {
+          return sum + tx.total;
+        }
+        return sum;
+      }, 0);
+      console.log(`User ${doc.id} total belanja: ${totalUser}`);
+      totalSemuaUser += totalUser;
+    } else {
+      console.log(`User ${doc.id} tidak memiliki transaksi`);
+    }
+  });
+  return totalSemuaUser;
 }

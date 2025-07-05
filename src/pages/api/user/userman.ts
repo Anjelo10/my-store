@@ -1,4 +1,4 @@
-import { deleteData, retrieveData, updateData } from "@/lib/firebase/service";
+import { retrieveData } from "@/lib/firebase/service";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { verify } from "@/utils/verifyToken";
 

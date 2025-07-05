@@ -1,10 +1,10 @@
 "use client";
 import AdminLayout from "@/components/Layout/AdminLayout/page";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ModalUpdateUser from "./ModalUpdateUser";
 import ModalDeleteUser from "./ModalDeleteUser";
 import { User } from "@/type/users.type";
-import { useSession } from "next-auth/react";
+import userServices from "@/services/users";
 
 type Proptypes = {
   users: User[];
@@ -19,7 +19,16 @@ const AdminUsersView = (props: Proptypes) => {
   const [updatedUser, setUpdatedUser] = useState<User | {}>({});
   const [deletedUser, setDeletedUser] = useState<User | {}>({});
   const [usersData, setUsersData] = useState<User[]>([]);
-  const session: any = useSession();
+  const [profile, setProfile] = useState<User | any>({});
+
+  console.log(usersData[0]?.id);
+  const getAllUsers = async () => {
+    const { data } = await userServices.getUserProfile();
+    setProfile(data.data);
+  };
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   useEffect(() => {
     setUsersData(users);
@@ -56,8 +65,13 @@ const AdminUsersView = (props: Proptypes) => {
                       <div className="flex gap-2">
                         <button
                           type="button"
+                          disabled={user.id === profile.id}
                           onClick={() => setUpdatedUser(user)}
-                          className="cursor-pointer bg-yellow-500 text-white px-2 rounded-sm p-2 flex items-center justify-center"
+                          className={` bg-yellow-500 text-white px-2 rounded-sm p-2 flex items-center justify-center ${
+                            user.id === profile.id
+                              ? "opacity-50 cursor-not-allowed"
+                              : "cursor-pointer"
+                          }`}
                         >
                           <i className="bx  bxs-edit text-xl " />
                         </button>

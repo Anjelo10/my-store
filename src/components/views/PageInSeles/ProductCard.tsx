@@ -1,3 +1,4 @@
+"use client";
 import { getLimitedProducts } from "@/lib/firebase/service";
 import { converIDR } from "@/utils/currency";
 import Image from "next/image";

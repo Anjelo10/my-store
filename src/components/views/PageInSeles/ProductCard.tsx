@@ -5,9 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const ProductCard = async () => {
+const ProductCard = () => {
   const [products, setProducts] = useState<any>([]);
 
+  console.log(products);
   useEffect(() => {
     const getProducts = async () => {
       const data = await getLimitedProducts("product", 4, false);
@@ -41,12 +42,12 @@ const ProductCard = async () => {
                   <p>Image Loading...</p>
                 )}
                 <div className="p-4">
-                  <h1 className="font-medium sm:text-xl">{products.name}</h1>
+                  <h1 className="font-medium sm:text-xl">{product.name}</h1>
                   <h1 className="text-sm text-gray-500 capitalize">
-                    {products.category}
+                    {product.category}
                   </h1>
                   <p className="sm:text-xl font-semibold text-yellow-500">
-                    {converIDR(products.price)}
+                    {converIDR(product.price)}
                   </p>
                 </div>
               </div>

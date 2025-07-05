@@ -16,7 +16,7 @@ import {
   getDocsFromServer,
 } from "firebase/firestore";
 import app from "./init";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 
 const firestore = getFirestore(app);
 
@@ -98,7 +98,7 @@ export async function signUp(userData: UserData): Promise<boolean> {
 
   const newUser = {
     ...userData,
-    password: await bcrypt.hash(userData.password, 10),
+    password: await bcryptjs.hash(userData.password, 10),
     role: userData.role || "member",
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),

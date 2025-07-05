@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ProductCard = async () => {
-  const product = await getLimitedProducts("product", 4);
+  const product = await getLimitedProducts("product", 4, false);
 
   return (
     <div

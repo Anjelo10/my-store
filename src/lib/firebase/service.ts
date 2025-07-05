@@ -156,7 +156,8 @@ export async function deleteData(
 
 export async function getLimitedProducts(
   collectionName: string,
-  limitCount: number
+  limitCount: number,
+  useCache: boolean = true
 ): Promise<FirestoreDocument[]> {
   if (!collectionName || !limitCount) {
     throw new Error(
@@ -169,7 +170,7 @@ export async function getLimitedProducts(
     orderBy("createdAt", "desc"),
     limit(limitCount)
   );
-  const snapshot = await getDocsFromServer(q);
+  const snapshot = useCache ? await getDocs(q) : await getDocsFromServer(q);
   const data = snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
